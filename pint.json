@@ -8,7 +8,6 @@
         "array_syntax": {
             "syntax": "short"
         },
-        "method_chaining_indentation": true,
         "binary_operator_spaces": {
             "default": "single_space",
             "operators": {
@@ -16,10 +15,6 @@
                 "=>": "align_single_space_minimal"
             }
         },
-        "nullable_type_declaration_for_default_null_value": {
-            "use_nullable_type_declaration": false
-        },
-        "nullable_type_declaration": false,
         "blank_line_after_namespace": true,
         "blank_line_after_opening_tag": false,
         "class_attributes_separation": {

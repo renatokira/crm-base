@@ -1,6 +1,3 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
 # Cores
 NC='\033[0m'
 BBlue='\033[1;34m'
@@ -13,10 +10,10 @@ COMMIT_MESSAGE="$(cat $1)"
 
 
 if [ -z "$ISSUE_ID" ]; then
-    echo "${BRed}Branch não está no padrão que deveria mestre... ${NC}"
+    echo "${BRed}Branch não está no padrão que deveria... ${NC}"
     exit 1
 fi
 
-echo "$ISSUE_ID: $COMMIT_MESSAGE" > $1
+echo "$ISSUE_ID: $COMMIT_MESSAGE";
 
 exit 0
