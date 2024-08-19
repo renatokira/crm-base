@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Auth\Register;
+use App\Models\User;
 use Livewire\Livewire;
 
 use function Pest\Laravel\{assertDatabaseCount, assertDatabaseHas};
@@ -10,7 +11,7 @@ it('renders successfully', function () {
         ->assertStatus(200);
 });
 
-it('should be able to  register new user in the system', function () {
+it('should be able to register new user in the system', function () {
 
     Livewire::test(Register::class)
         ->set('name', 'Joe Doe')
@@ -26,6 +27,10 @@ it('should be able to  register new user in the system', function () {
     ]);
 
     assertDatabaseCount('users', 1);
+
+    expect(auth()->check())->toBeTrue()
+        ->and(auth()->user()->id)
+        ->toBe(User::first()->id);
 });
 
 test('required fields', function ($field) {
