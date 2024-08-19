@@ -19,7 +19,8 @@ it('should be able to register new user in the system', function () {
         ->set('email_confirmation', 'joe@doe.com')
         ->set('password', 'secret')
         ->call('submit')
-        ->assertHasNoErrors();
+        ->assertHasNoErrors()
+        ->assertRedirect('/home');
 
     assertDatabaseHas('users', [
         'name'  => 'Joe Doe',
