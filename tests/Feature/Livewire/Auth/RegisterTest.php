@@ -2,11 +2,13 @@
 
 use App\Livewire\Auth\Register;
 use App\Models\User;
+use App\Notifications\WelcomeNotification;
+use Illuminate\Support\Facades\Notification;
 use Livewire\Livewire;
 
 use function Pest\Laravel\{assertDatabaseCount, assertDatabaseHas};
 
-it('renders successfully', function () {
+it('should render the component', function () {
     Livewire::test(Register::class)
         ->assertStatus(200);
 });
@@ -67,3 +69,19 @@ test('required fields', function ($field) {
     'password::required' => (object)['field' => 'password', 'value' => '', 'rule' => 'required'],
 
 ]);
+
+it('should send a notification welcoming a new user', function () {
+
+    Notification::fake();
+
+    Livewire::test(Register::class)
+        ->set('name', 'Joe Doe')
+        ->set('email', 'joe@doe.com')
+        ->set('email_confirmation', 'joe@doe.com')
+        ->set('password', 'secret')
+        ->call('submit');
+
+    $user = User::whereEmail('joe@doe.com')->first();
+
+    Notification::assertSentTo($user, WelcomeNotification::class);
+});
