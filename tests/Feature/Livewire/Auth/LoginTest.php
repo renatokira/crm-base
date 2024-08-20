@@ -25,3 +25,13 @@ it('should to be able to login in the system', function () {
     expect(auth()->check())->toBeTrue()
         ->and(auth()->user()->id)->toBe($user?->id);
 });
+
+it('should make sure to inform the user an error when login fails', function () {
+
+    Livewire::test(Login::class)
+        ->set('email', 'joe@doe.com')
+        ->set('password', 'password')
+        ->call('tryToLogin')
+        ->assertHasErrors(['invalidCredentials' => trans('auth.failed')])
+        ->assertSee(trans('auth.failed'));
+});

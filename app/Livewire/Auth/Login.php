@@ -4,6 +4,7 @@ namespace App\Livewire\Auth;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\{ValidationException};
 use Livewire\Component;
 
 class Login extends Component
@@ -21,8 +22,9 @@ class Login extends Component
     {
 
         if (!Auth::attempt(['email' => $this->email, 'password' => $this->password])) {
-
-            return;
+            throw ValidationException::withMessages([
+                'invalidCredentials' => trans('auth.failed'),
+            ]);
         };
 
         $this->redirect(route('dashboard'));
