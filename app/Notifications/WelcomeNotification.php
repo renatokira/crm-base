@@ -23,7 +23,7 @@ class WelcomeNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage())
-            ->line('Welcome DWDM O&M Libre')
+            ->line('Welcome APP')
             ->line('Thank you for using our application!');
     }
 

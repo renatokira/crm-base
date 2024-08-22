@@ -41,6 +41,6 @@ class Register extends Component
 
         $user->notify(new WelcomeNotification());
 
-        $this->redirect('/');
+        $this->redirect(route('dashboard'));
     }
 }

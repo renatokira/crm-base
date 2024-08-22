@@ -1,6 +1,6 @@
 <div>
     <!-- HEADER -->
-    <x-header title="DWDM O&M - Libre" separator progress-indicator>
+    <x-header title="App" separator progress-indicator>
         <x-slot:middle class="!justify-end">
             <x-input placeholder="Search..." wire:model.live.debounce="search" clearable icon="o-magnifying-glass" />
         </x-slot:middle>
@@ -13,7 +13,7 @@
     <x-card>
         <x-table :headers="$headers" :rows="$users" :sort-by="$sortBy">
             @scope('actions', $user)
-            <x-button icon="o-trash" wire:click="delete({{ $user['id'] }})" spinner class="btn-ghost btn-sm text-red-500" />
+            <x-button icon="o-trash" wire:click="delete({{ $user['id'] }})" spinner class="text-red-500 btn-ghost btn-sm" />
             @endscope
         </x-table>
     </x-card>
