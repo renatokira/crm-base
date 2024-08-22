@@ -23,6 +23,11 @@ class Login extends Component
     public function tryToLogin(): void
     {
 
+        $this->validate([
+            'email'    => 'required|email',
+            'password' => 'required',
+        ]);
+
         if (RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
             throw ValidationException::withMessages([
                 'rateLimiter' => trans('auth.throttle', ['seconds' => RateLimiter::availableIn($this->throttleKey())]),
