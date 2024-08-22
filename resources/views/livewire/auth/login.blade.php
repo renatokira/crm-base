@@ -17,7 +17,11 @@
             <x-input label="Email" wire:model="email" />
             <x-input label="Password" type="password" wire:model="password" />
 
-
+            <div class="w-full text-sm text-right">
+                <a href="{{ route('auth.password.recovery') }}" class="text-xs link link-primary">
+                    Forgot your password?
+                </a>
+            </div>
 
             <x-slot:actions>
                 <div class="flex justify-between w-full align-items-center">
