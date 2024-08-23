@@ -18,7 +18,7 @@
             <x-input label="Password" type="password" wire:model="password" />
 
             <div class="w-full text-sm text-right">
-                <a href="{{ route('auth.password.recovery') }}" class="text-xs link link-primary">
+                <a href="{{ route('password.recovery') }}" class="text-xs link link-primary">
                     Forgot your password?
                 </a>
             </div>
