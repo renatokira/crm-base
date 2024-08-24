@@ -13,3 +13,7 @@ Route::get('/password/reset', Reset::class)->name('password.reset');
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', Welcome::class)->name('dashboard');
 });
+
+Route::get('debug', function () {
+    dd("IN " . __FILE__ . " on line " . __LINE__, request()->all());
+})->name('debug');
