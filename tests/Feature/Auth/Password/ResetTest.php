@@ -96,3 +96,12 @@ it('checking form rules', function ($field, $value, $rule) {
     'password:required'  => ['field' => 'password', 'value' => '', 'rule' => 'required'],
     'password:confirmed' => ['field' => 'password', 'value' => 'any-password', 'rule' => 'confirmed'],
 ]);
+
+test('needs to show an obfuscate email to the user', function ($email, $obfuscate) {
+    $obfuscatedEmail = obfuscate_email($email);
+    expect($obfuscatedEmail)
+        ->toBe($obfuscate);
+})->with([
+    ['email' => 'example@example.com', 'obfuscate' => 'ex*****@********com'],
+    ['email' => 'test@example.com', 'obfuscate' => 't***@********com'],
+]);
