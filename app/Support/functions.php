@@ -2,10 +2,18 @@
 
 if (!function_exists('obfuscate_email')) {
 
-    function obfuscate_email(string $email)
+    function obfuscate_email(?string $email = null): string
     {
 
+        if (!$email) {
+            return '';
+        }
+
         $split = explode('@', $email);
+
+        if(count($split) < 2) {
+            return '';
+        }
 
         $fisrt       = $split[0];
         $firstQtd    = (int) floor(strlen($fisrt) * 0.75);

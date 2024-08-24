@@ -57,6 +57,10 @@ class Reset extends Component
 
         session()->flash('status', __($status));
 
+        if ($status !== Password::PASSWORD_RESET) {
+            return;
+        }
+
         $this->redirectRoute('login');
     }
 
