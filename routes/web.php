@@ -1,5 +1,7 @@
 <?php
 
+use App\Enum\CanEnum;
+use App\Livewire\Admin;
 use App\Livewire\Auth\Password\{Recovery, Reset};
 use App\Livewire\Auth\{Login, Register};
 use App\Livewire\{Welcome};
@@ -17,8 +19,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/', Welcome::class)->name('dashboard');
 
     //region Admin
-    Route::prefix('admin')->middleware('can:be-an-admin')->group(function () {
-        Route::get('/dashboard', fn () => 'oi')->name('admin.dashboard');
+    Route::prefix('admin')->middleware('can:' . CanEnum::BE_AN_ADMIN->value)->group(function () {
+        Route::get('/dashboard', Admin\Dashboard::class)->name('admin.dashboard');
     });
     //endregion
 
