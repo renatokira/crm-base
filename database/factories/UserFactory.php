@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enum\CanEnum;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
@@ -43,7 +44,7 @@ class UserFactory extends Factory
         ]);
     }
 
-    public function withPermission(string $permission): static
+    public function withPermission(CanEnum $permission): static
     {
         return $this->afterCreating(fn (User $user) => $user->givePermissionTo($permission));
     }
