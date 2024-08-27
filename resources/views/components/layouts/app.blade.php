@@ -50,10 +50,12 @@
                 @endif
 
                 <x-menu-item title="Matrizes" icon="o-sparkles" link="/" />
-                <x-menu-sub title="Settings" icon="o-cog-6-tooth">
-                    <x-menu-item title="Wifi" icon="o-wifi" link="####" />
-                    <x-menu-item title="Archives" icon="o-archive-box" link="####" />
-                </x-menu-sub>
+                @can(\App\Enum\CanEnum::BE_AN_ADMIN->value)
+                    <x-menu-sub title="Admin" icon="o-cog-6-tooth">
+                        <x-menu-item title="Dashboard" icon="o-chart-bar-square" :link="route('admin.dashboard')" />
+                        <x-menu-item title="Archives" icon="o-archive-box" link="####" />
+                    </x-menu-sub>
+                @endcan
             </x-menu>
         </x-slot:sidebar>
 
