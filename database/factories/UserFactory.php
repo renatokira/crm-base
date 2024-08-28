@@ -48,4 +48,9 @@ class UserFactory extends Factory
     {
         return $this->afterCreating(fn (User $user) => $user->givePermissionTo($permission));
     }
+
+    public function admin(): static
+    {
+        return $this->afterCreating(fn (User $user) => $user->givePermissionTo(CanEnum::BE_AN_ADMIN));
+    }
 }
