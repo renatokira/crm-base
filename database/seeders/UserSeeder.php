@@ -10,6 +10,7 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
+
         User::factory()
             ->withPermission(CanEnum::BE_AN_ADMIN)
             ->create([
@@ -22,5 +23,7 @@ class UserSeeder extends Seeder
                 'name'  => 'John Doe',
                 'email' => 'test@example.com',
             ]);
+
+        User::factory()->count(50)->create();
     }
 }
