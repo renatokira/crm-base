@@ -7,6 +7,11 @@
             <x-input placeholder="Search by email and name" icon="o-magnifying-glass"
                 wire:model.live.debounce.300ms="search" />
         </div>
+
+        <div class="w-1/6">
+            <x-choices placeholder="Permissions" wire:model.live="search_permissions" :options="$this->permissions" />
+        </div>
+
     </div>
 
     {{-- You can use any `$wire.METHOD` on `@row-click` --}}

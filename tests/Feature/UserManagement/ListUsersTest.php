@@ -1,7 +1,8 @@
 <?php
 
+use App\Enum\CanEnum;
 use App\Livewire\Admin;
-use App\Models\User;
+use App\Models\{Permission, User};
 use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Livewire;
 
@@ -79,6 +80,29 @@ it('should be able to filter by name or email', function () {
             expect($users)
                 ->toHaveCount(1)
                 ->first()->name->toBe('Kira');
+
+            return true;
+        });
+});
+
+it('should be able to filter by permission key', function () {
+    $admin      = User::factory()->admin()->create(['name' => 'Joe Doe', 'email' => 'j@j.com']);
+    $permission = Permission::where('key', CanEnum::BE_AN_ADMIN->value)->first();
+    User::factory()->create(['name' => 'Kira', 'email' => 'rntok@k.com']);
+
+    actingAs($admin);
+
+    Livewire::test(Admin\Users\Index::class)
+        ->assertSet('users', function ($users) {
+            expect($users)
+                ->toHaveCount(2);
+
+            return true;
+        })->set('search_permissions', [$permission->id])
+        ->assertSet('users', function ($users) {
+            expect($users)
+                ->toHaveCount(1)
+                ->first()->name->toBe('Joe Doe');
 
             return true;
         });

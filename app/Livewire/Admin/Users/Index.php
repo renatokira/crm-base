@@ -3,7 +3,7 @@
 namespace App\Livewire\Admin\Users;
 
 use App\Enum\CanEnum;
-use App\Models\User;
+use App\Models\{Permission, User};
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -17,6 +17,8 @@ class Index extends Component
     use WithoutUrlPagination;
 
     public ?string $search = null;
+
+    public array $search_permissions = [];
 
     public function mount()
     {
@@ -37,12 +39,21 @@ class Index extends Component
     {
         return User::query()
             ->with('permissions')
-            ->when($this->search, fn (Builder $q) => $q->where(
-                DB::raw('lower(name)'),
-                'like',
-                '%' . strtolower($this->search) . '%'
+            ->when(
+                $this->search,
+                fn (Builder $q) => $q->where(
+                    DB::raw('lower(name)'),
+                    'like',
+                    '%' . strtolower($this->search) . '%'
+                )
+                    ->orWhere('email', 'like', '%' . strtolower($this->search) . '%')
+            )->when(
+                $this->search_permissions,
+                fn (Builder $q) => $q->whereHas(
+                    'permissions',
+                    fn (Builder $q) => $q->whereIn('id', $this->search_permissions)
+                )
             )
-                ->orWhere('email', 'like', '%' . strtolower($this->search) . '%'))
             ->paginate();
     }
 
@@ -57,4 +68,13 @@ class Index extends Component
         ];
     }
 
+    #[Computed]
+    public function permissions(): array
+    {
+        return Permission::all()
+            ->map(fn ($permission) => [
+                'id'   => $permission->id,
+                'name' => $permission->key,
+            ])->toArray();
+    }
 }
