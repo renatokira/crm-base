@@ -53,7 +53,8 @@
                 @can(\App\Enum\CanEnum::BE_AN_ADMIN->value)
                     <x-menu-sub title="Admin" icon="o-cog-6-tooth">
                         <x-menu-item title="Dashboard" icon="o-chart-bar-square" :link="route('admin.dashboard')" />
-                        <x-menu-item title="Archives" icon="o-archive-box" link="####" />
+                        <x-menu-item title="Users" icon="o-users" :link="route('admin.users')" />
+
                     </x-menu-sub>
                 @endcan
             </x-menu>
@@ -61,7 +62,9 @@
 
         {{-- The `$slot` goes here --}}
         <x-slot:content>
-            {{ $slot }}
+            <div class="p-5">
+                {{ $slot }}
+            </div>
         </x-slot:content>
     </x-main>
 
