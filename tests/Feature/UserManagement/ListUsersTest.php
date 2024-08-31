@@ -86,8 +86,8 @@ it('should be able to filter by name or email', function () {
 });
 
 it('should be able to filter by permission key', function () {
-    $admin   = User::factory()->admin()->create(['name' => 'Joe Doe', 'email' => 'j@j.com']);
-    $noAdmin = User::factory()->withPermission(CanEnum::BE_AN_USER)
+    $admin = User::factory()->admin()->create(['name' => 'Joe Doe', 'email' => 'j@j.com']);
+    User::factory()->withPermission(CanEnum::BE_AN_USER)
         ->create(['name' => 'No Admin', 'email' => 'noadmin@noadm.com']);
 
     $permissionAnAdmin = Permission::where('key', CanEnum::BE_AN_ADMIN->value)->first();
@@ -106,6 +106,30 @@ it('should be able to filter by permission key', function () {
             expect($users)
                 ->toHaveCount(2)
                 ->first()->name->toBe('Joe Doe');
+
+            return true;
+        });
+});
+
+it('should be list deleted users', function () {
+    $admin = User::factory()->admin()->create(['name' => 'Joe Doe', 'email' => 'admin@admin.com']);
+    User::factory()->count(2)->create([
+        'deleted_at' => now(),
+    ]);
+
+    actingAs($admin);
+
+    Livewire::test(Admin\Users\Index::class)
+        ->assertSet('users', function ($users) {
+            expect($users)
+                ->toHaveCount(1);
+
+            return true;
+        })
+        ->set('search_trashed', true)
+        ->assertSet('users', function ($users) {
+            expect($users)
+                ->toHaveCount(2);
 
             return true;
         });

@@ -19,6 +19,8 @@ class Index extends Component
 
     public ?string $search = null;
 
+    public bool $search_trashed = false;
+
     public array $search_permissions = [];
 
     public Collection $permissionsToSearchable;
@@ -57,6 +59,10 @@ class Index extends Component
                     'permissions',
                     fn (Builder $q) => $q->whereIn('id', $this->search_permissions)
                 )
+            )
+            ->when(
+                $this->search_trashed,
+                fn (Builder $q) => $q->onlyTrashed()
             )
             ->paginate();
     }
