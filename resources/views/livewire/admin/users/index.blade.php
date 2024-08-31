@@ -2,17 +2,23 @@
 
     <x-header title="Users" separator />
 
-    <div class="flex mb-5 space-x-4">
+    <div class="flex mb-5 space-x-4 place-items-center">
         <div class="w-1/3">
             <x-input label="Search by email and name" placeholder="Search by email and name" icon="o-magnifying-glass"
                 wire:model.live.debounce.300ms="search" />
         </div>
 
-        <div class="w-1/6">
-            <x-choices label="Serch by permissions" placeholder="Permissions" wire:model.live="search_permissions" :options="$permissionsToSearchable"
-                search-function="searchPermissions" searchable option-label="key" no-result-text="Nothing here" />
+        <div class="min-w-52">
+            <x-choices label="Serch by permissions" placeholder="Permissions" wire:model.live="search_permissions"
+                :options="$permissionsToSearchable" search-function="searchPermissions" searchable option-label="key"
+                no-result-text="Nothing here" />
 
         </div>
+
+        <div>
+            <x-checkbox label="Show deleted users" wire:model.live="search_trashed" right tight />
+        </div>
+
 
     </div>
 
@@ -30,9 +36,13 @@
         @endscope
 
 
-        {{-- Special `actions` slot --}}
         @scope('actions', $user)
-            <x-button icon="o-trash" wire:click="delete({{ $user->id }})" spinner class="btn-ghost btn-sm" />
+            @unless ($user->trashed())
+                <x-button icon="o-trash" wire:click="delete({{ $user->id }})" spinner class="btn-ghost btn-sm" />
+            @else
+                <x-button title="Restore" icon="o-arrow-uturn-left" wire:click="restore({{ $user->id }})" spinner
+                    class="btn-ghost btn-sm" />
+            @endunless
         @endscope
 
     </x-table>

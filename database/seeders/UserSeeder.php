@@ -24,6 +24,14 @@ class UserSeeder extends Seeder
                 'email' => 'test@example.com',
             ]);
 
-        User::factory()->count(50)->create();
+        User::factory()->count(20)->create();
+        User::factory()->count(5)
+            ->sequence(
+                ['deleted_at' => now()->subMinutes(random_int(1, 5))],
+                [
+                    'deleted_at' => now()->subMinutes(random_int(1, 5)),
+                ]
+            )
+            ->create();
     }
 }
