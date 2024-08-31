@@ -48,15 +48,15 @@ test('checking a table format', function () {
 
     Livewire::test(Admin\Users\Index::class)
         ->assertSet('headers', [
-            ['key' => 'id', 'label' => '#'],
-            ['key' => 'name', 'label' => 'Name'],
-            ['key' => 'email', 'label' => 'Email'],
-            ['key' => 'permissions', 'label' => 'Permissions'],
+            ['key' => 'id', 'label' => '#', 'sortColumnBy' => 'id', 'sortDirection' => 'asc'],
+            ['key' => 'name', 'label' => 'Name',   'sortColumnBy' => 'id', 'sortDirection' => 'asc'],
+            ['key' => 'email', 'label' => 'Email', 'sortColumnBy' => 'id', 'sortDirection' => 'asc'],
+            ['key' => 'permissions', 'label' => 'Permissions', 'sortColumnBy' => 'id', 'sortDirection' => 'asc'],
         ]);
 });
 
 it('should be able to filter by name or email', function () {
-    $admin = User::factory()->admin()->create(['name' => 'Joe Doe', 'email' => 'j@j.com']);
+    $admin = User::factory()->admin()->create(['name' => 'Joe Doe', 'email' => 'jd@jd.com']);
     User::factory()->create(['name' => 'Kira', 'email' => 'rntok@k.com']);
 
     actingAs($admin);
@@ -86,7 +86,7 @@ it('should be able to filter by name or email', function () {
 });
 
 it('should be able to filter by permission key', function () {
-    $admin = User::factory()->admin()->create(['name' => 'Joe Doe', 'email' => 'j@j.com']);
+    $admin = User::factory()->admin()->create(['name' => 'Joe Doe', 'email' => 'jd@jd.com']);
     User::factory()->withPermission(CanEnum::BE_AN_USER)
         ->create(['name' => 'No Admin', 'email' => 'noadmin@noadm.com']);
 
@@ -130,6 +130,38 @@ it('should be list deleted users', function () {
         ->assertSet('users', function ($users) {
             expect($users)
                 ->toHaveCount(2);
+
+            return true;
+        });
+});
+
+it('should be able to sort by name', function () {
+    $admin = User::factory()->admin()->create(['name' => 'Joe Doe', 'email' => 'jd@jd.com']);
+    User::factory()->withPermission(CanEnum::BE_AN_USER)
+        ->create(['name' => 'No Admin', 'email' => 'noadmin@noadm.com']);
+
+    actingAs($admin);
+
+    Livewire::test(Admin\Users\Index::class)
+        ->set('sortDirection', 'desc')
+        ->set('sortColumnBy', 'name')
+        ->assertSet('users', function ($users) {
+            expect($users)
+                ->first()->name->toBe('No Admin')
+                ->and($users)
+                ->last()->name->toBe('Joe Doe');
+
+            return true;
+        });
+
+    Livewire::test(Admin\Users\Index::class)
+        ->set('sortDirection', 'asc')
+        ->set('sortColumnBy', 'name')
+        ->assertSet('users', function ($users) {
+            expect($users)
+                ->first()->name->toBe('Joe Doe')
+                ->and($users)
+                ->last()->name->toBe('No Admin');
 
             return true;
         });

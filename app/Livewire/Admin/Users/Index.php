@@ -25,6 +25,10 @@ class Index extends Component
 
     public Collection $permissionsToSearchable;
 
+    public string $sortDirection = 'asc';
+
+    public string $sortColumnBy = 'id';
+
     public function mount()
     {
         $this->authorize(CanEnum::BE_AN_ADMIN->value);
@@ -34,6 +38,14 @@ class Index extends Component
     public function render(): View
     {
         return view('livewire.admin.users.index');
+    }
+
+    // Reset pagination when any component property changes
+    public function updated($property): void
+    {
+        if (!is_array($property) && $property != "") {
+            $this->resetPage();
+        }
     }
 
     public function delete(int $id)
@@ -64,6 +76,7 @@ class Index extends Component
                 $this->search_trashed,
                 fn (Builder $q) => $q->onlyTrashed()
             )
+            ->orderBy($this->sortColumnBy, $this->sortDirection)
             ->paginate();
     }
 
@@ -71,10 +84,10 @@ class Index extends Component
     public function headers(): array
     {
         return [
-            ['key' => 'id', 'label' => '#'],
-            ['key' => 'name', 'label' => 'Name'],
-            ['key' => 'email', 'label' => 'Email'],
-            ['key' => 'permissions', 'label' => 'Permissions'],
+            ['key' => 'id', 'label' => '#', 'sortColumnBy' => $this->sortColumnBy, 'sortDirection' => $this->sortDirection],
+            ['key' => 'name', 'label' => 'Name', 'sortColumnBy' => $this->sortColumnBy, 'sortDirection' => $this->sortDirection],
+            ['key' => 'email', 'label' => 'Email', 'sortColumnBy' => $this->sortColumnBy, 'sortDirection' => $this->sortDirection],
+            ['key' => 'permissions', 'label' => 'Permissions', 'sortColumnBy' => $this->sortColumnBy, 'sortDirection' => $this->sortDirection],
         ];
     }
 
@@ -97,5 +110,11 @@ class Index extends Component
                 'id'   => $permission->id,
                 'name' => $permission->key,
             ])->toArray();
+    }
+
+    public function sortBy(string $column, string $direction): void
+    {
+        $this->sortColumnBy  = $column;
+        $this->sortDirection = $direction;
     }
 }

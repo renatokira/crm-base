@@ -25,6 +25,19 @@
     {{-- You can use any `$wire.METHOD` on `@row-click` --}}
     <x-table :headers="$this->headers" :rows="$this->users" with-pagination striped>
 
+        @scope('header_id', $header)
+            <x-table.th-label name="id" :$header class="select-none" />
+        @endscope
+
+        @scope('header_name', $header)
+            <x-table.th-label name="name" :$header class="select-none" />
+        @endscope
+
+        @scope('header_email', $header)
+            <x-table.th-label name="email" :$header class="select-none" />
+        @endscope
+
+
         @scope('cell_permissions', $user)
             @if ($user->permissions->count())
                 @foreach ($user->permissions as $permission)
