@@ -7,6 +7,7 @@ use App\Models\{Permission, User};
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Computed;
 use Livewire\{Component, WithPagination, WithoutUrlPagination};
@@ -20,9 +21,12 @@ class Index extends Component
 
     public array $search_permissions = [];
 
+    public Collection $permissionsToSearchable;
+
     public function mount()
     {
         $this->authorize(CanEnum::BE_AN_ADMIN->value);
+        $this->searchPermissions();
     }
 
     public function render(): View
@@ -66,6 +70,17 @@ class Index extends Component
             ['key' => 'email', 'label' => 'Email'],
             ['key' => 'permissions', 'label' => 'Permissions'],
         ];
+    }
+
+    public function searchPermissions(?string $value = '')
+    {
+        $this->permissionsToSearchable = Permission::query()
+            ->when(
+                $value,
+                fn (Builder $q) => $q->where('key', 'like', '%' . $value . '%')
+            )
+            ->orderBy('key')
+            ->get();
     }
 
     #[Computed]
