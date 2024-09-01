@@ -10,12 +10,11 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Computed;
-use Livewire\{Component, WithPagination, WithoutUrlPagination};
+use Livewire\{Component, WithPagination};
 
 class Index extends Component
 {
     use WithPagination;
-    use WithoutUrlPagination;
 
     public ?string $search = null;
 

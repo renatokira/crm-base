@@ -1,5 +1,4 @@
 <div>
-
     <x-header title="Users" separator />
 
     <div class="flex mb-5 space-x-4 place-items-center">
@@ -24,8 +23,7 @@
 
     </div>
 
-    {{-- You can use any `$wire.METHOD` on `@row-click` --}}
-    <x-table :headers="$this->headers" :rows="$this->users" striped>
+    <x-table :headers="$this->headers" :rows="$this->users">
 
         @scope('header_id', $header)
             <x-table.th-label name="id" :$header class="select-none" />
@@ -62,5 +60,5 @@
 
     </x-table>
 
-    {{ $this->users->links() }}
+    {{ $this->users->links(data: ['scrollTo' => false]) }}
 </div>
