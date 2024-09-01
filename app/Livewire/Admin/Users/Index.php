@@ -29,6 +29,8 @@ class Index extends Component
 
     public string $sortColumnBy = 'id';
 
+    public int $perPage = 15;
+
     public function mount()
     {
         $this->authorize(CanEnum::BE_AN_ADMIN->value);
@@ -77,7 +79,17 @@ class Index extends Component
                 fn (Builder $q) => $q->onlyTrashed()
             )
             ->orderBy($this->sortColumnBy, $this->sortDirection)
-            ->paginate();
+            ->paginate($this->perPage);
+    }
+
+    #[Computed]
+    public function listPerPages(): array
+    {
+        return [
+            ['id' => 15, 'name' => '15'],
+            ['id' => 30, 'name' => '30'],
+            ['id' => 50, 'name' => '50'],
+        ];
     }
 
     #[Computed]

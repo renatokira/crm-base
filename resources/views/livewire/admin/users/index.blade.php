@@ -15,15 +15,17 @@
 
         </div>
 
-        <div>
-            <x-checkbox label="Show deleted users" wire:model.live="search_trashed" right tight />
-        </div>
+
+        <x-checkbox label="Show deleted users" wire:model.live="search_trashed" right tight />
+
+        <x-select label="Records per page" :options="$this->listPerPages" wire:model.live="perPage" />
+
 
 
     </div>
 
     {{-- You can use any `$wire.METHOD` on `@row-click` --}}
-    <x-table :headers="$this->headers" :rows="$this->users" with-pagination striped>
+    <x-table :headers="$this->headers" :rows="$this->users" striped>
 
         @scope('header_id', $header)
             <x-table.th-label name="id" :$header class="select-none" />
@@ -59,4 +61,6 @@
         @endscope
 
     </x-table>
+
+    {{ $this->users->links() }}
 </div>
