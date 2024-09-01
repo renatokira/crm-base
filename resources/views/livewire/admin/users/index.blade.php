@@ -60,5 +60,7 @@
 
     </x-table>
 
-    {{ $this->users->links(data: ['scrollTo' => false]) }}
+    <div class="mt-7">
+        {{ $this->users->links(data: ['scrollTo' => false]) }}
+    </div>
 </div>
