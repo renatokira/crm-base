@@ -16,7 +16,6 @@ return new class () extends Migration {
         Schema::create('permission_user', function (Blueprint $table) {
             $table->foreignId('user_id');
             $table->foreignId('permission_id');
-            $table->index(['user_id', 'permission_id']);
             $table->unique(['user_id', 'permission_id']);
         });
     }
