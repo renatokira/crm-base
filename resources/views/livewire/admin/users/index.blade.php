@@ -9,7 +9,7 @@
 
         <div class="min-w-52">
             <x-choices label="Serch by permissions" placeholder="Permissions" wire:model.live="search_permissions"
-                :options="$permissionsToSearchable" search-function="searchPermissions" searchable option-label="key"
+                :options="$permissionsToSearch" search-function="searchPermissions" searchable option-label="key"
                 no-result-text="Nothing here" />
 
         </div>

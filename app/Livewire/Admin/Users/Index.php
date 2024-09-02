@@ -22,7 +22,7 @@ class Index extends Component
 
     public array $search_permissions = [];
 
-    public Collection $permissionsToSearchable;
+    public Collection $permissionsToSearch;
 
     public string $sortDirection = 'asc';
 
@@ -104,23 +104,13 @@ class Index extends Component
 
     public function searchPermissions(?string $value = '')
     {
-        $this->permissionsToSearchable = Permission::query()
+        $this->permissionsToSearch = Permission::query()
             ->when(
                 $value,
-                fn (Builder $q) => $q->where('key', 'like', '%' . $value . '%')
+                fn (Builder $q) => $q->where('key', 'like', "%$value%")
             )
             ->orderBy('key')
             ->get();
-    }
-
-    #[Computed]
-    public function permissions(): array
-    {
-        return Permission::all()
-            ->map(fn ($permission) => [
-                'id'   => $permission->id,
-                'name' => $permission->key,
-            ])->toArray();
     }
 
     public function sortBy(string $column, string $direction): void
