@@ -21,20 +21,33 @@ trait HasPermission
         $this->permissions()->firstOrCreate(['key' => $permissionKey]);
 
         Cache::forget($this->permissionCachedKey());
-        Cache::rememberForever($this->permissionCachedKey(), fn () => $this->permissions);
+        Cache::rememberForever(
+            $this->permissionCachedKey(),
+            fn () => $this->permissions
+        );
     }
 
     public function hasPermissionTo(CanEnum|string $key): bool
     {
+
         $permissionKey = $key instanceof CanEnum ? $key->value : $key;
 
-        $permissions = Cache::get($this->permissionCachedKey(), fn () => $this->permissions());
+        $permissions = Cache::get(
+            $this->permissionCachedKey(),
+            function () {
+                return $this->permissions;
+            }
+        );
 
-        return $permissions->where('key', '=', $permissionKey)->count() > 0;
+        return $permissions
+            ->where('key', '=', $permissionKey)
+            ->isNotEmpty();
     }
 
     private function permissionCachedKey(): string
     {
-        return "user::{$this->id}::permissions";
+        $userId = $this->id;
+
+        return "user::{$userId}::permissions";
     }
 }
