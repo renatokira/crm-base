@@ -51,8 +51,9 @@
 
         @scope('actions', $user)
 
-            <div class="flex space-x-2">
-                <x-button icon="o-eye" id="show-{{ $user->id }}" wire:click="showUser('{{ $user->id }}')" spinner />
+            <div class="flex items-center space-x-2">
+                <x-button icon="o-eye" wire:key="show-btn-{{ $user->id }}" id="show-btn-{{ $user->id }}"
+                    wire:click="showUser('{{ $user->id }}')" spinner class="btn-ghost btn-sm" />
 
                 @unless ($user->trashed())
                     @unless ($user->is(auth()->user()))

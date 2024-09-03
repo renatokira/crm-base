@@ -15,7 +15,7 @@ it('should be able to show all details of a user in the component', function () 
     Livewire::test(Admin\Users\Show::class)
         ->call('loadUser', $user->id)
         ->assertSet('user.id', $user->id)
-        ->assertSet('modal', true)
+        ->assertSet('drawer', true)
         ->assertSee($user->email)
         ->assertSee($user->created_at->format('d/m/Y H:i'))
         ->assertSee($user->updated_at->format('d/m/Y H:i'))
@@ -23,7 +23,7 @@ it('should be able to show all details of a user in the component', function () 
         ->assertSee($user->deletedBy->name);
 });
 
-it('should open the modal when event is dispatched', function () {
+it('should open the drawer when event is dispatched', function () {
 
     $admin = User::factory()->admin()->create();
     $user  = User::factory()->deleted()->create();

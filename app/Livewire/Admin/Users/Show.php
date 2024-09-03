@@ -10,7 +10,7 @@ class Show extends Component
 {
     public ?User $user = null;
 
-    public bool $modal = false;
+    public bool $drawer = false;
 
     public function render()
     {
@@ -20,8 +20,8 @@ class Show extends Component
     #[On('user::show')]
     public function loadUser(int $id): void
     {
-        $this->user  = User::withTrashed()->find($id);
-        $this->modal = true;
+        $this->user   = User::withTrashed()->find($id);
+        $this->drawer = true;
     }
 
 }
