@@ -51,9 +51,10 @@
 
         @scope('actions', $user)
             @unless ($user->trashed())
-                <x-button icon="o-trash" wire:click="delete({{ $user->id }})" spinner class="btn-ghost btn-sm" />
+                <x-button icon="o-trash" id="delete-{{ $user->id }}" wire:click="destroy('{{ $user->id }}')" spinner
+                    class="btn-ghost btn-sm" wire:key="destroy-{{ $user->id }}" />
             @else
-                <x-button title="Restore" icon="o-arrow-uturn-left" wire:click="restore({{ $user->id }})" spinner
+                <x-button title="Restore" icon="o-arrow-uturn-left" wire:click="restore('{{ $user->id }}')" spinner
                     class="btn-ghost btn-sm" />
             @endunless
         @endscope
@@ -63,4 +64,6 @@
     <div class="mt-7">
         {{ $this->users->links(data: ['scrollTo' => false]) }}
     </div>
+
+    <livewire:admin.users.delete />
 </div>
