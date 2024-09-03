@@ -53,4 +53,12 @@ class UserFactory extends Factory
     {
         return $this->afterCreating(fn (User $user) => $user->givePermissionTo(CanEnum::BE_AN_ADMIN));
     }
+
+    public function deleted(?User $deletedBy = null): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'deleted_at' => now(),
+            'deleted_by' => $deletedBy ?? User::factory()->admin(),
+        ]);
+    }
 }

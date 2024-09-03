@@ -25,13 +25,6 @@ class UserSeeder extends Seeder
             ]);
 
         User::factory()->count(50)->create();
-        User::factory()->count(5)
-            ->sequence(
-                ['deleted_at' => now()->subMinutes(random_int(1, 5))],
-                [
-                    'deleted_at' => now()->subMinutes(random_int(1, 5)),
-                ]
-            )
-            ->create();
+        User::factory()->count(5)->deleted()->create();
     }
 }
