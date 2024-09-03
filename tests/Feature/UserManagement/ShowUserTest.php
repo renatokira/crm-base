@@ -23,6 +23,27 @@ it('should be able to show all details of a user in the component', function () 
         ->assertSee($user->deletedBy->name);
 });
 
+it('should be able to restore a user and display information', function () {
+
+    $admin          = User::factory()->admin()->create();
+    $forRestoration = User::factory()->deleted()->create();
+
+    actingAs($admin);
+
+    Livewire::test(Admin\Users\Restore::class)
+        ->set('user', $forRestoration)
+        ->set('confirm_confirmation', 'RESTORE')
+        ->call('restore');
+
+    Livewire::test(Admin\Users\Show::class)
+        ->call('loadUser', $forRestoration->id)
+        ->assertSet('user.id', $forRestoration->id)
+        ->assertSet('drawer', true)
+        ->assertSee($forRestoration->email)
+        ->assertSee($forRestoration->deleted_at?->format('d/m/Y H:i'))
+        ->assertSee($forRestoration->restoredBy?->name);
+});
+
 it('should open the drawer when event is dispatched', function () {
 
     $admin = User::factory()->admin()->create();
@@ -48,7 +69,7 @@ it('making sure that the method loadUser has the On', function () {
     $attribuite = $attributesLoadUser[0];
 
     expect($attribuite)->getName()->toBe('Livewire\Attributes\On')
-    ->and($attribuite)->getArguments()->toHaveCount(1);
+        ->and($attribuite)->getArguments()->toHaveCount(1);
 
     expect($attribuite->getArguments()[0])->toBe('user::show');
 });

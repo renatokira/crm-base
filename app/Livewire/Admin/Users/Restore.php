@@ -44,7 +44,7 @@ class Restore extends Component
         $this->user->restore();
 
         $this->user->restored_at = now();
-        $this->user->restored_by = auth()->id();
+        $this->user->restored_by = auth()->user()->id;
         $this->user->deleted_by  = null;
 
         $this->user->save();
