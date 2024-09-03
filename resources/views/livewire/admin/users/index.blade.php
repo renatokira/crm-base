@@ -51,8 +51,10 @@
 
         @scope('actions', $user)
             @unless ($user->trashed())
-                <x-button icon="o-trash" id="delete-{{ $user->id }}" wire:click="destroy('{{ $user->id }}')" spinner
-                    class="btn-ghost btn-sm" wire:key="destroy-{{ $user->id }}" />
+                @unless ($user->is(auth()->user()))
+                    <x-button icon="o-trash" id="delete-{{ $user->id }}" wire:click="destroy('{{ $user->id }}')" spinner
+                        class="btn-ghost btn-sm" wire:key="destroy-{{ $user->id }}" />
+                @endunless
             @else
                 <x-button title="Restore" icon="o-arrow-uturn-left" wire:click="restore('{{ $user->id }}')" spinner
                     class="btn-ghost btn-sm" />
