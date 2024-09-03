@@ -52,11 +52,11 @@
         @scope('actions', $user)
             @unless ($user->trashed())
                 @unless ($user->is(auth()->user()))
-                    <x-button icon="o-trash" id="delete-{{ $user->id }}" wire:click="destroy('{{ $user->id }}')" spinner
+                    <x-button icon="o-trash" id="destroy-{{ $user->id }}" wire:click="destroy('{{ $user->id }}')" spinner
                         class="btn-ghost btn-sm" wire:key="destroy-{{ $user->id }}" />
                 @endunless
             @else
-                <x-button title="Restore" icon="o-arrow-uturn-left" wire:click="restore('{{ $user->id }}')" spinner
+                <x-button title="Restore" icon="o-arrow-uturn-left"  wire:key="restore-{{ $user->id }}" wire:click="restore('{{ $user->id }}')" spinner
                     class="btn-ghost btn-sm" />
             @endunless
         @endscope
@@ -68,4 +68,6 @@
     </div>
 
     <livewire:admin.users.delete />
+
+    <livewire:admin.users.restore />
 </div>
