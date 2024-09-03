@@ -124,4 +124,10 @@ class Index extends Component
     {
         $this->dispatch('user::restoring', userId: $userId)->to('admin.users.restore');
     }
+
+    public function showUser(int $id): void
+    {
+
+        $this->dispatch('user::show', id: $id)->to('admin.users.show');
+    }
 }

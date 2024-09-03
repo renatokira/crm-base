@@ -10,9 +10,7 @@ use function Pest\Laravel\{actingAs, assertNotSoftDeleted, assertSoftDeleted};
 
 it('should be able to restore a user', function () {
     $user           = User::factory()->admin()->create();
-    $forRestoration = User::factory([
-        'deleted_at' => now(),
-    ])->create();
+    $forRestoration = User::factory()->deleted()->create();
 
     actingAs($user);
     Livewire::test(Admin\Users\Restore::class)
@@ -30,13 +28,13 @@ it('should be able to restore a user', function () {
     expect($forRestoration)
         ->restored_at->not->toBeNull()
         ->restoredBy->id->toBe($user->id);
+
+    expect($forRestoration)->deletedBy->id->toBe(null);
 });
 
 it('should have a confirmation before restoration', function () {
     $user           = User::factory()->admin()->create();
-    $forRestoration = User::factory()->create(
-        ['deleted_at' => now()]
-    );
+    $forRestoration = User::factory()->deleted()->create();
 
     actingAs($user);
     Livewire::test(Admin\Users\Restore::class)
