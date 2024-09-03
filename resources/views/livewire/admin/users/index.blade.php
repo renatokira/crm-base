@@ -50,15 +50,20 @@
 
 
         @scope('actions', $user)
-            @unless ($user->trashed())
-                @unless ($user->is(auth()->user()))
-                    <x-button icon="o-trash" id="destroy-{{ $user->id }}" wire:click="destroy('{{ $user->id }}')" spinner
-                        class="btn-ghost btn-sm" wire:key="destroy-{{ $user->id }}" />
+
+            <div class="flex space-x-2">
+                <x-button icon="o-eye" id="show-{{ $user->id }}" wire:click="showUser('{{ $user->id }}')" spinner />
+
+                @unless ($user->trashed())
+                    @unless ($user->is(auth()->user()))
+                        <x-button icon="o-trash" id="destroy-{{ $user->id }}" wire:click="destroy('{{ $user->id }}')"
+                            spinner class="btn-ghost btn-sm" wire:key="destroy-{{ $user->id }}" />
+                    @endunless
+                @else
+                    <x-button title="Restore" icon="o-arrow-uturn-left" wire:key="restore-{{ $user->id }}"
+                        wire:click="restore('{{ $user->id }}')" spinner class="btn-ghost btn-sm" />
                 @endunless
-            @else
-                <x-button title="Restore" icon="o-arrow-uturn-left"  wire:key="restore-{{ $user->id }}" wire:click="restore('{{ $user->id }}')" spinner
-                    class="btn-ghost btn-sm" />
-            @endunless
+            </div>
         @endscope
 
     </x-table>
@@ -70,4 +75,6 @@
     <livewire:admin.users.delete />
 
     <livewire:admin.users.restore />
+
+    <livewire:admin.users.show />
 </div>

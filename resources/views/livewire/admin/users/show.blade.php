@@ -1,6 +1,8 @@
 <div>
     {{-- Care about people's approval and you will be their prisoner. --}}
 
+    'Show user'
+
     @if ($user)
         {{ $user->name }}
         {{ $user->email }}
