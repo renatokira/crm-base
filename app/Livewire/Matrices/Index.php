@@ -3,14 +3,15 @@
 namespace App\Livewire\Matrices;
 
 use App\Models\Matrice;
-use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
-use Livewire\Component;
+use Livewire\{Component, WithPagination, WithoutUrlPagination};
 use Mary\Traits\Toast;
 
 class Index extends Component
 {
     use Toast;
+    use WithPagination;
+    use WithoutUrlPagination;
 
     public string $search = '';
 
@@ -32,41 +33,26 @@ class Index extends Component
     }
 
     // Table headers
+    #[Computed]
     public function headers(): array
     {
         return [
             ['key' => 'id', 'label' => '#', 'class' => 'w-1'],
             ['key' => 'name', 'label' => 'Matriz', 'class' => 'w-64'],
-            ['key' => 'total', 'label' => 'Total', 'class' => 'w-20'],
+            ['key' => 'threshold', 'label' => 'Threshold', 'class' => 'w-20'],
+            ['key' => 'bandwidth', 'label' => 'Bandwidth', 'class' => 'w-20'],
         ];
     }
 
     #[Computed]
-    public function users(): Collection
+    public function users(): \Illuminate\Pagination\Paginator
     {
-
-        return Matrice::query()
-            ->get()->map(fn (Matrice $matrix) => [
-                'id'    => $matrix->id,
-                'name'  => $matrix->name,
-                'total' => $matrix->count(),
-            ]);
-        // return collect([
-        //     ['id' => 1, 'name' => 'Matriz 1', 'total' => 23],
-        //     ['id' => 2, 'name' => 'Matriz 2', 'total' => 7],
-        //     ['id' => 3, 'name' => 'Matriz 3', 'total' => 5],
-        // ])
-        //     ->sortBy([[...array_values($this->sortBy)]])
-        //     ->when($this->search, function (Collection $collection) {
-        //         return $collection->filter(fn (array $item) => str($item['name'])->contains($this->search, true));
-        //     });
+        return Matrice::query()->simplePaginate();
     }
 
     public function render()
     {
-        return view('livewire.matrices.index', [
-            'users'   => $this->users(),
-            'headers' => $this->headers(),
-        ]);
+
+        return view('livewire.matrices.index');
     }
 }

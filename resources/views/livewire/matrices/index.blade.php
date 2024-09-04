@@ -11,11 +11,19 @@
 
     <!-- TABLE  -->
     <x-card>
-        <x-table :headers="$headers" :rows="$users" :sort-by="$sortBy">
+        <x-table :headers="$this->headers" :rows="$this->users" :sort-by="$sortBy">
             @scope('actions', $user)
                 <x-button icon="o-trash" wire:click="delete({{ $user['id'] }})" spinner class="btn-ghost btn-sm" />
             @endscope
+
+            @scope('cell_bandwidth', $user)
+                {{ $user['bandwidth'] . '' . $user['bandwidth_unit'] }}
+            @endscope
         </x-table>
+
+        <div class="mt-7">
+            {{ $this->users->links(data: ['scrollTo' => false]) }}
+        </div>
     </x-card>
 
     <!-- FILTER DRAWER -->
