@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class MatriceFactory extends Factory
+class MatrixFactory extends Factory
 {
     public function definition(): array
     {

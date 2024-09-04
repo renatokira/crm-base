@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Matrices;
 
-use App\Models\Matrice;
+use App\Models\Matrix;
 use Livewire\Attributes\Computed;
 use Livewire\{Component, WithPagination, WithoutUrlPagination};
 use Mary\Traits\Toast;
@@ -32,6 +32,11 @@ class Index extends Component
         $this->warning("Will delete #$id", 'It is fake.', position: 'toast-bottom');
     }
 
+    public function showMatrix($id): void
+    {
+        $this->success("Will show #$id", 'It is fake.', position: 'toast-bottom');
+    }
+
     // Table headers
     #[Computed]
     public function headers(): array
@@ -47,7 +52,7 @@ class Index extends Component
     #[Computed]
     public function users(): \Illuminate\Pagination\Paginator
     {
-        return Matrice::query()->simplePaginate();
+        return Matrix::query()->simplePaginate();
     }
 
     public function render()

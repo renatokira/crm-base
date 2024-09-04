@@ -12,12 +12,15 @@
     <!-- TABLE  -->
     <x-card>
         <x-table :headers="$this->headers" :rows="$this->users" :sort-by="$sortBy">
-            @scope('actions', $user)
-                <x-button icon="o-trash" wire:click="delete({{ $user['id'] }})" spinner class="btn-ghost btn-sm" />
-            @endscope
 
             @scope('cell_bandwidth', $user)
                 {{ $user['bandwidth'] . '' . $user['bandwidth_unit'] }}
+            @endscope
+
+            @scope('actions', $user)
+                <x-button icon="o-eye" wire:key="show-btn-{{ $user->id }}" id="show-btn-{{ $user->id }}"
+                    wire:click="showMatrix('{{ $user->id }}')" spinner class="btn-ghost btn-sm" />
+                <x-button icon="o-trash" wire:click="delete({{ $user['id'] }})" spinner class="btn-ghost btn-sm" />
             @endscope
         </x-table>
 

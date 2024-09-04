@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\{Matrice};
+use App\Models\{Matrix};
 use Illuminate\Database\Seeder;
 
-class MatricesSeeder extends Seeder
+class MatrixSeeder extends Seeder
 {
     public function run(): void
     {
@@ -39,7 +39,7 @@ class MatricesSeeder extends Seeder
             ["MATRIZ-VLNK", 10],
         ];
 
-        Matrice::factory()->create([
+        Matrix::factory()->create([
             'name'           => 'MATRIZ-FLA-JZN',
             'threshold'      => 1780,
             'bandwidth'      => 2,
@@ -47,7 +47,7 @@ class MatricesSeeder extends Seeder
         ]);
 
         foreach ($matrices as $matrix) {
-            Matrice::factory()->create([
+            Matrix::factory()->create([
                 'name'      => $matrix[0],
                 'threshold' => $matrix[1],
             ]);
