@@ -3,6 +3,7 @@
 namespace App\Livewire\Matrices;
 
 use App\Models\Matrix;
+use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\Computed;
 use Livewire\{Component, WithPagination, WithoutUrlPagination};
 use Mary\Traits\Toast;
@@ -13,7 +14,7 @@ class Index extends Component
     use WithPagination;
     use WithoutUrlPagination;
 
-    public string $search = '';
+    public ?string $search = null;
 
     public bool $drawer = false;
 
@@ -49,10 +50,20 @@ class Index extends Component
         ];
     }
 
-    #[Computed]
-    public function users(): \Illuminate\Pagination\Paginator
+    // Reset pagination when any component property changes
+    public function updated($property): void
     {
-        return Matrix::query()->simplePaginate();
+        if (!is_array($property) && $property != "") {
+            $this->resetPage();
+        }
+    }
+
+    #[Computed]
+    public function matrices(): \Illuminate\Pagination\Paginator
+    {
+        return Matrix::query()
+            ->when($this->search, fn (Builder $q) => $q->where('name', 'like', "%$this->search%"))
+            ->simplePaginate();
     }
 
     public function render()
