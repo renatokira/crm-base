@@ -13,7 +13,7 @@ class Matrice extends Model
         'name',
         'threshold',
         'bandwidth',
-        'unit',
+        'bandwidth_unit',
         'description',
     ];
 }
