@@ -20,8 +20,8 @@ class AppBrand extends Component
                     <div {{ $attributes->class(["hidden-when-collapsed"]) }}>
                         <div class="flex items-center gap-2">
                             <x-icon name="o-square-3-stack-3d" class="w-6 -mb-1 text-purple-500" />
-                            <span class="text-2xl font-bold text-transparent me-3 bg-gradient-to-r from-purple-500 to-pink-300 bg-clip-text ">
-                                App
+                            <span class="max-w-xs font-bold text-transparent text-1xl me-3 bg-gradient-to-r from-purple-500 to-pink-300 bg-clip-text ">
+                                DWDM O&M Matizes
                             </span>
                         </div>
                     </div>
