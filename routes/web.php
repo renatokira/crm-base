@@ -1,9 +1,9 @@
 <?php
 
 use App\Enum\CanEnum;
-use App\Livewire\Admin;
 use App\Livewire\Auth\Password\{Recovery, Reset};
 use App\Livewire\Auth\{Login, Register};
+use App\Livewire\{Admin, Matrices};
 use App\Livewire\{Welcome};
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +17,10 @@ Route::get('/password/reset', Reset::class)->name('password.reset');
 //region Autenticated
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', Welcome::class)->name('dashboard');
+
+    //region matrices
+    Route::get('matrices', Matrices\Index::class)->name('matrices.index');
+    //endregion
 
     //region Admin
     Route::prefix('admin')->middleware('can:' . CanEnum::BE_AN_ADMIN->value)->group(function () {

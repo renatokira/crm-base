@@ -49,7 +49,7 @@
                     <x-menu-separator />
                 @endif
 
-                <x-menu-item title="Matrizes" icon="o-sparkles" link="/" />
+                <x-menu-item title="Matrizes" icon="o-sparkles" :link="route('matrices.index')" />
                 @can(\App\Enum\CanEnum::BE_AN_ADMIN->value)
                     <x-menu-sub title="Admin" icon="o-cog-6-tooth">
                         <x-menu-item title="Dashboard" icon="o-chart-bar-square" :link="route('admin.dashboard')" />
