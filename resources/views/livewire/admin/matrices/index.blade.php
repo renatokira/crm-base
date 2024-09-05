@@ -1,6 +1,6 @@
 <div>
     <!-- HEADER -->
-    <x-header title="Matrizes" separator progress-indicator>
+    <x-header title="Matrices" separator progress-indicator>
         <x-slot:middle class="!justify-end">
             <x-input placeholder="Search..." wire:model.live.debounce="search" clearable icon="o-magnifying-glass" />
         </x-slot:middle>
@@ -8,6 +8,7 @@
             <x-button label="Filters" @click="$wire.drawer = true" responsive icon="o-funnel" class="btn-primary" />
         </x-slot:actions>
     </x-header>
+
 
     <!-- TABLE  -->
     <x-card>
@@ -40,5 +41,5 @@
         </x-slot:actions>
     </x-drawer>
 
-    <livewire:matrices.show />
+    <livewire:admin.matrices.show />
 </div>

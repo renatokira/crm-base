@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Livewire\Matrices;
+namespace App\Livewire\Admin\Matrices;
 
+use App\Enum\CanEnum;
 use App\Models\Matrix;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\{Computed};
@@ -20,6 +21,12 @@ class Index extends Component
 
     public array $sortBy = ['column' => 'name', 'direction' => 'asc'];
 
+    public function mount()
+    {
+
+        $this->authorize(CanEnum::BE_AN_ADMIN->value);
+    }
+
     // Clear filters
     public function clear(): void
     {
@@ -36,8 +43,7 @@ class Index extends Component
     public function showMatrix($id): void
     {
 
-        $this->dispatch('matrix::show', id: $id)->to('matrices.show');
-
+        $this->dispatch('matrix::show', id: $id)->to('admin.matrices.show');
     }
 
     // Table headers
@@ -64,13 +70,13 @@ class Index extends Component
     public function matrices(): \Illuminate\Pagination\Paginator
     {
         return Matrix::query()
-            ->when($this->search, fn (Builder $q) => $q->where('name', 'like', "%$this->search%"))
+            ->when($this->search, fn(Builder $q) => $q->where('name', 'like', "%$this->search%"))
             ->simplePaginate();
     }
 
     public function render()
     {
 
-        return view('livewire.matrices.index');
+        return view('livewire.admin.matrices.index');
     }
 }

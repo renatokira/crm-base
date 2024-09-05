@@ -1,24 +1,21 @@
 <?php
 
-use App\Livewire\Matrices;
+use App\Livewire\Admin\Matrices;
 use App\Models\{Matrix, User};
 use Livewire\Livewire;
 
-use function Pest\Laravel\{actingAs, get};
+use function Pest\Laravel\{actingAs};
 
-it('should be able to access the route of matrices with any authenticated user', function () {
-    /** @var User $user */
-    $user = User::factory()->create();
+it('should be able to access the route of matrices', function () {
 
-    get(route('matrices.index'))->assertRedirect(route('login'));
-
-    actingAs($user)->get(route('matrices.index'))->assertOk();
+    $user = User::factory()->admin()->create();
+    actingAs($user)->get(route('admin.matrices.index'))->assertOk();
 });
 
 it('livewire component to list  paginated matrices in the page', function () {
 
     /** @var User $user */
-    $user = User::factory()->create();
+    $user = User::factory()->admin()->create();
 
     actingAs($user);
 
@@ -50,7 +47,7 @@ test('checking a matices table format', function () {
 
 it('should be able to filter by name', function () {
     /** @var User $user */
-    $user = User::factory()->create();
+    $user = User::factory()->admin()->create();
 
     Matrix::factory()->create([
         'name' => 'MATRIZ-FLA-JZN',
@@ -90,6 +87,9 @@ it('should be able to filter by name', function () {
 it('should open the modal when event is dispatched', function () {
 
     $matrix = Matrix::factory()->create();
+    $user = User::factory()->admin()->create();
+    actingAs($user);
+
 
     Livewire::test(Matrices\Index::class)
         ->call('showMatrix', $matrix->id)

@@ -2,12 +2,16 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
+use Livewire\{Component, WithPagination};
 
 class Welcome extends Component
 {
+    use WithPagination;
+
     public function render()
     {
-        return view('livewire.welcome');
+        return view('livewire.welcome', [
+            'matrices' => \App\Models\Matrix::simplePaginate(10),
+        ]);
     }
 }

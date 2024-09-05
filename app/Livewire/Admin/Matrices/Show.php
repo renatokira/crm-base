@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Matrices;
+namespace App\Livewire\Admin\Matrices;
 
 use App\Models\Matrix;
 use Livewire\Attributes\On;
@@ -14,7 +14,7 @@ class Show extends Component
 
     public function render()
     {
-        return view('livewire.matrices.show');
+        return view('livewire.admin.matrices.show');
     }
 
     #[On('matrix::show')]
