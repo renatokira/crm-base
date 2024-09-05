@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Matrices extends Model
+class Matrix extends Model
 {
     use HasFactory;
 
@@ -13,7 +13,7 @@ class Matrices extends Model
         'name',
         'threshold',
         'bandwidth',
-        'unit',
+        'bandwidth_unit',
         'description',
     ];
 }

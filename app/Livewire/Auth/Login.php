@@ -44,7 +44,7 @@ class Login extends Component
             ]);
         };
 
-        $this->redirect(route('dashboard'));
+        $this->redirect(route('welcome'));
     }
 
     private function throttleKey(): string

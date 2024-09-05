@@ -127,7 +127,6 @@ class Index extends Component
 
     public function showUser(int $id): void
     {
-
         $this->dispatch('user::show', id: $id)->to('admin.users.show');
     }
 }

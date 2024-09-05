@@ -13,7 +13,7 @@ return new class () extends Migration {
             $table->string('name')->unique();
             $table->integer('threshold')->nullable();
             $table->integer('bandwidth')->nullable();
-            $table->string('unit')->nullable();
+            $table->string('bandwidth_unit')->nullable();
             $table->string('description')->nullable();
             $table->timestamps();
         });

@@ -22,7 +22,7 @@ it('should to be able to login in the system', function () {
         ->set('password', 'password')
         ->call('tryToLogin')
         ->assertHasNoErrors()
-        ->assertRedirect(route('dashboard'));
+        ->assertRedirect(route('welcome'));
 
     expect(auth()->check())->toBeTrue()
         ->and(auth()->user()->id)->toBe($user?->id);

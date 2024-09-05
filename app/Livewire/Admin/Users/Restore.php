@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Users;
 
+use App\Enum\CanEnum;
 use App\Models\User;
 use App\Notifications\UserRestoredAccessNotification;
 use Illuminate\Contracts\View\View;
@@ -21,6 +22,12 @@ class Restore extends Component
     public string $confirm = 'RESTORE';
 
     public ?string $confirm_confirmation = null;
+
+    public function mount()
+    {
+        $this->authorize(CanEnum::BE_AN_ADMIN->value);
+
+    }
 
     public function render(): View
     {
