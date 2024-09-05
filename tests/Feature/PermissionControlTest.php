@@ -37,7 +37,7 @@ test('permission must have a seeder', function () {
 
 test('seeder with an admin user', function () {
 
-    seed([UserSeeder::class]);
+    seed([PermissionSeeder::class, UserSeeder::class]);
 
     assertDatabaseHas('permissions', [
         'key' => CanEnum::BE_AN_ADMIN->value,

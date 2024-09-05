@@ -70,7 +70,7 @@ class Index extends Component
     public function matrices(): \Illuminate\Pagination\Paginator
     {
         return Matrix::query()
-            ->when($this->search, fn(Builder $q) => $q->where('name', 'like', "%$this->search%"))
+            ->when($this->search, fn (Builder $q) => $q->where('name', 'like', "%$this->search%"))
             ->simplePaginate();
     }
 

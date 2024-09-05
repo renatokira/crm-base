@@ -87,9 +87,8 @@ it('should be able to filter by name', function () {
 it('should open the modal when event is dispatched', function () {
 
     $matrix = Matrix::factory()->create();
-    $user = User::factory()->admin()->create();
+    $user   = User::factory()->admin()->create();
     actingAs($user);
-
 
     Livewire::test(Matrices\Index::class)
         ->call('showMatrix', $matrix->id)

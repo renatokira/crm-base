@@ -24,6 +24,11 @@
         </x-slot:actions>
     </x-nav>
 
+
+    @if (!app()->environment('production'))
+        <livewire:dev.login />
+    @endif
+
     {{-- MAIN --}}
     <x-main full-width>
         {{-- SIDEBAR --}}
