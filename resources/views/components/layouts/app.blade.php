@@ -24,6 +24,8 @@
         </x-slot:actions>
     </x-nav>
 
+    <livewire:dev.login />
+
     {{-- MAIN --}}
     <x-main full-width>
         {{-- SIDEBAR --}}
