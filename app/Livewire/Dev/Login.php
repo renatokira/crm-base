@@ -21,4 +21,16 @@ class Login extends Component
     {
         return User::all();
     }
+
+    public function tryToLogin(): void
+    {
+
+        if (!$this->selectedUser) {
+            return;
+        }
+
+        auth()->loginUsingId($this->selectedUser);
+
+        $this->redirect(route('welcome'));
+    }
 }
