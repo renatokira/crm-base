@@ -4,7 +4,7 @@ namespace App\Livewire\Matrices;
 
 use App\Models\Matrix;
 use Illuminate\Database\Eloquent\Builder;
-use Livewire\Attributes\Computed;
+use Livewire\Attributes\{Computed};
 use Livewire\{Component, WithPagination, WithoutUrlPagination};
 use Mary\Traits\Toast;
 
@@ -35,7 +35,9 @@ class Index extends Component
 
     public function showMatrix($id): void
     {
-        $this->success("Will show #$id", 'It is fake.', position: 'toast-bottom');
+
+        $this->dispatch('matrix::show', id: $id)->to('matrices.show');
+
     }
 
     // Table headers

@@ -4,11 +4,13 @@ use App\Livewire\Matrices;
 use App\Models\{Matrix, User};
 use Livewire\Livewire;
 
-use function Pest\Laravel\actingAs;
+use function Pest\Laravel\{actingAs, get};
 
 it('should be able to access the route of matrices with any authenticated user', function () {
     /** @var User $user */
     $user = User::factory()->create();
+
+    get(route('matrices.index'))->assertRedirect(route('login'));
 
     actingAs($user)->get(route('matrices.index'))->assertOk();
 });
@@ -83,4 +85,27 @@ it('should be able to filter by name', function () {
 
             return true;
         });
+});
+
+it('should open the modal when event is dispatched', function () {
+
+    $matrix = Matrix::factory()->create();
+
+    Livewire::test(Matrices\Index::class)
+        ->call('showMatrix', $matrix->id)
+        ->assertDispatched('matrix::show', id: $matrix->id);
+});
+
+it('should be able to show all details of a matrix in the component', function () {
+
+    $matrix = Matrix::factory()->create();
+
+    Livewire::test(Matrices\Show::class)
+        ->call('loadMatrix', $matrix->id)
+        ->assertSet('matrix.id', $matrix->id)
+        ->assertSet('modal', true)
+        ->assertSee($matrix->name)
+        ->assertSee($matrix->threshold)
+        ->assertSee($matrix->bandwidth . '' . $matrix->bandwidth_unit)
+        ->assertSee($matrix->created_at->format('d/m/Y H:i'));
 });

@@ -39,4 +39,6 @@
             <x-button label="Done" icon="o-check" class="btn-primary" @click="$wire.drawer = false" />
         </x-slot:actions>
     </x-drawer>
+
+    <livewire:matrices.show />
 </div>
