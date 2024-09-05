@@ -53,8 +53,8 @@
                 @can(\App\Enum\CanEnum::BE_AN_ADMIN->value)
                     <x-menu-sub title="Admin" icon="o-cog-6-tooth">
                         <x-menu-item title="Dashboard" icon="o-chart-bar-square" :link="route('admin.dashboard')" />
-                        <x-menu-item title="Users" icon="o-users" :link="route('admin.users')" />
                         <x-menu-item title="Matrices" icon="o-sparkles" :link="route('admin.matrices.index')" />
+                        <x-menu-item title="Users" icon="o-users" :link="route('admin.users')" />
                     </x-menu-sub>
                 @endcan
             </x-menu>
