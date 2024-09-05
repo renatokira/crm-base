@@ -12,7 +12,9 @@
 
 <body class="font-sans antialiased">
 
-    <livewire:dev.login />
+    @if (!app()->environment('production'))
+        <livewire:dev.login />
+    @endif
 
     <div class="flex flex-col min-h-screen pt-6 bg-gray-100 sm:justify-center dark:bg-gray-900">
         {{ $slot }}
