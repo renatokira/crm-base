@@ -30,3 +30,24 @@ it('should be able list all matrices in the page welcome paginated', function ()
             return true;
         });
 });
+
+it('should be able filter matrices by name', function () {
+    /** @var User $user */
+    $user = User::factory()->create();
+    actingAs($user);
+
+    Matrix::factory()->count(15)->create();
+    Matrix::factory()->create([
+        'name' => 'FLA-JZN',
+    ]);
+
+    Livewire::test(Welcome::class)
+        ->set('search', 'FLA-JZN')
+        ->assertViewHas('matrices', function ($matrices) {
+            expect($matrices)
+                ->toHaveCount(1)
+                ->first()->name->toBe('FLA-JZN');
+
+            return true;
+        });
+});
