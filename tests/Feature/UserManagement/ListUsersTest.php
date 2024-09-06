@@ -48,10 +48,10 @@ test('checking a table format', function () {
 
     Livewire::test(Admin\Users\Index::class)
         ->assertSet('headers', [
-            ['key' => 'id', 'label' => '#', 'sortColumnBy' => 'id', 'sortDirection' => 'asc'],
-            ['key' => 'name', 'label' => 'Name',   'sortColumnBy' => 'id', 'sortDirection' => 'asc'],
-            ['key' => 'email', 'label' => 'Email', 'sortColumnBy' => 'id', 'sortDirection' => 'asc'],
-            ['key' => 'permissions', 'label' => 'Permissions', 'sortColumnBy' => 'id', 'sortDirection' => 'asc'],
+            ['key' => 'id', 'label' => '#'],
+            ['key' => 'name', 'label' => 'Name', ],
+            ['key' => 'email', 'label' => 'Email'],
+            ['key' => 'permissions_name', 'label' => 'Permissions'],
         ]);
 });
 
@@ -141,8 +141,7 @@ it('should be able to sort by name', function () {
     actingAs($admin);
 
     Livewire::test(Admin\Users\Index::class)
-        ->set('sortDirection', 'desc')
-        ->set('sortColumnBy', 'name')
+        ->set('sortBy', ['column' => 'name', 'direction' => 'desc'])
         ->assertSet('users', function ($users) {
             expect($users)
                 ->first()->name->toBe('No Admin')
@@ -153,8 +152,7 @@ it('should be able to sort by name', function () {
         });
 
     Livewire::test(Admin\Users\Index::class)
-        ->set('sortDirection', 'asc')
-        ->set('sortColumnBy', 'name')
+        ->set('sortBy', ['column' => 'name', 'direction' => 'asc'])
         ->assertSet('users', function ($users) {
             expect($users)
                 ->first()->name->toBe('Joe Doe')

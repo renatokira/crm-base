@@ -21,6 +21,8 @@ class Index extends Component
 
     public array $sortBy = ['column' => 'name', 'direction' => 'asc'];
 
+    public int $perPage = 15;
+
     public function mount()
     {
 
@@ -71,6 +73,7 @@ class Index extends Component
     {
         return Matrix::query()
             ->when($this->search, fn (Builder $q) => $q->where('name', 'like', "%$this->search%"))
+            ->orderBy(...array_values($this->sortBy))
             ->simplePaginate();
     }
 

@@ -24,9 +24,7 @@ class Index extends Component
 
     public Collection $permissionsToSearch;
 
-    public string $sortDirection = 'asc';
-
-    public string $sortColumnBy = 'id';
+    public array $sortBy = ['column' => 'name', 'direction' => 'asc'];
 
     public int $perPage = 15;
 
@@ -54,6 +52,7 @@ class Index extends Component
     {
         return User::query()
             ->with('permissions')
+            ->withAggregate('permissions', 'name')
             ->when(
                 $this->search,
                 fn (Builder $q) => $q->where(
@@ -73,7 +72,7 @@ class Index extends Component
                 $this->search_trashed,
                 fn (Builder $q) => $q->onlyTrashed()
             )
-            ->orderBy($this->sortColumnBy, $this->sortDirection)
+            ->orderBy(...array_values($this->sortBy))
             ->paginate($this->perPage);
     }
 
@@ -91,10 +90,10 @@ class Index extends Component
     public function headers(): array
     {
         return [
-            ['key' => 'id', 'label' => '#', 'sortColumnBy' => $this->sortColumnBy, 'sortDirection' => $this->sortDirection],
-            ['key' => 'name', 'label' => 'Name', 'sortColumnBy' => $this->sortColumnBy, 'sortDirection' => $this->sortDirection],
-            ['key' => 'email', 'label' => 'Email', 'sortColumnBy' => $this->sortColumnBy, 'sortDirection' => $this->sortDirection],
-            ['key' => 'permissions', 'label' => 'Permissions', 'sortColumnBy' => $this->sortColumnBy, 'sortDirection' => $this->sortDirection],
+            ['key' => 'id', 'label' => '#'],
+            ['key' => 'name', 'label' => 'Name'],
+            ['key' => 'email', 'label' => 'Email'],
+            ['key' => 'permissions_name', 'label' => 'Permissions'],
         ];
     }
 
@@ -107,12 +106,6 @@ class Index extends Component
             )
             ->orderBy('key')
             ->get();
-    }
-
-    public function sortBy(string $column, string $direction): void
-    {
-        $this->sortColumnBy  = $column;
-        $this->sortDirection = $direction;
     }
 
     public function destroy(int $userId): void
