@@ -26,7 +26,7 @@
 
 
     @if (!app()->environment('production'))
-        <livewire:dev.login />
+        <x-devbar />
     @endif
 
     {{-- MAIN --}}
