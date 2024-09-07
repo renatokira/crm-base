@@ -6,11 +6,8 @@
     <div class="flex mb-5 space-x-4 place-items-center">
 
         <div class="w-1/3">
-            <x-input placeholder="Search by name" icon="o-magnifying-glass" wire:model.live.debounce.300ms="search" />
+            <x-input placeholder="Search by name and bandwidth" icon="o-magnifying-glass" wire:model.live.debounce.300ms="search" />
         </div>
-
-        <x-input placeholder="Bandwidth" icon="o-presentation-chart-line" wire:model.live.debounce.300ms="bandwidth"
-            type="number" />
 
     </div>
 

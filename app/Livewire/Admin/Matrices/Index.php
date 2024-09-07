@@ -5,7 +5,6 @@ namespace App\Livewire\Admin\Matrices;
 use App\Enum\CanEnum;
 use App\Models\Matrix;
 use App\Traits\Livewire\HasTable;
-use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\{Computed};
 use Livewire\{Component, WithPagination, WithoutUrlPagination};
 use Mary\Traits\Toast;
@@ -68,7 +67,7 @@ class Index extends Component
     public function matrices(): \Illuminate\Pagination\Paginator
     {
         return Matrix::query()
-            ->when($this->search, fn (Builder $q) => $q->where('name', 'like', "%$this->search%"))
+            ->search($this->search, ['name', 'bandwidth'])
             ->orderBy(...array_values($this->sortBy))
             ->simplePaginate();
     }

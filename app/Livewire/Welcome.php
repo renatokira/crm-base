@@ -11,8 +11,6 @@ class Welcome extends Component
 
     public ?string $search = null;
 
-    public ?int $bandwidth = null;
-
     public function updated($property): void
     {
         if (!is_array($property) && $property != "") {
@@ -24,12 +22,7 @@ class Welcome extends Component
     public function matrices()
     {
         return \App\Models\Matrix::query()
-            ->when($this->search, function ($query) {
-                $query->where('name', 'like', "%$this->search%");
-            })
-            ->when($this->bandwidth, function ($query) {
-                $query->where('bandwidth', 'like', "%$this->bandwidth%");
-            })
+            ->search($this->search, ['name', 'bandwidth'])
             ->simplePaginate(12);
     }
 

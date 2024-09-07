@@ -45,16 +45,18 @@ test('checking a matices table format', function () {
         ]);
 });
 
-it('should be able to filter by name', function () {
+it('should be able to filter by name and bandwidth', function () {
     /** @var User $user */
     $user = User::factory()->admin()->create();
 
     Matrix::factory()->create([
-        'name' => 'FLA-JZN',
+        'name'      => 'FLA-JZN',
+        'bandwidth' => 100,
     ]);
 
     Matrix::factory()->create([
-        'name' => 'RNT-KIRA',
+        'name'      => 'RNT-KIRA',
+        'bandwidth' => 700,
     ]);
 
     actingAs($user);
@@ -74,7 +76,7 @@ it('should be able to filter by name', function () {
 
             return true;
         })
-        ->set('search', 'kira')
+        ->set('search', 700)
         ->assertSet('matrices', function ($matrices) {
             expect($matrices)
                 ->toHaveCount(1)

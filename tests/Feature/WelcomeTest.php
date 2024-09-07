@@ -36,42 +36,30 @@ it('should be able filter matrices by name', function () {
     $user = User::factory()->create();
     actingAs($user);
 
-    Matrix::factory()->count(15)->create();
     Matrix::factory()->create([
-        'name' => 'FLA-JZN',
+        'name'      => 'FLA-JZP',
+        'bandwidth' => 300,
+    ]);
+
+    Matrix::factory()->create([
+        'name'      => 'FLA-JZN',
+        'bandwidth' => 700,
     ]);
 
     Livewire::test(Welcome::class)
-        ->set('search', 'FLA-JZN')
+        ->set('search', 'FLA-JZP')
         ->assertSet('matrices', function ($matrices) {
             expect($matrices)
                 ->toHaveCount(1)
-                ->first()->name->toBe('FLA-JZN');
+                ->first()->name->toBe('FLA-JZP');
 
             return true;
-        });
-});
-
-// filter bandwidth
-
-it('should be able filter matrices by bandwidth', function () {
-    /** @var User $user */
-    $user = User::factory()->create();
-    actingAs($user);
-
-    Matrix::factory()->count(15)->create([
-        'bandwidth' => random_int(100, 300),
-    ]);
-    Matrix::factory()->count(2)->create([
-        'bandwidth' => 600,
-    ]);
-
-    Livewire::test(Welcome::class)
-        ->set('bandwidth', 600)
+        })
+        ->set('search', 700)
         ->assertSet('matrices', function ($matrices) {
             expect($matrices)
-                ->toHaveCount(2)
-                ->first()->bandwidth->toBe(600);
+                ->toHaveCount(1)
+                ->first()->bandwidth->toBe(700);
 
             return true;
         });
