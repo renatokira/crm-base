@@ -1,14 +1,15 @@
 <div>
     <!-- HEADER -->
     <x-header title="Matrices" separator progress-indicator>
-        <x-slot:middle class="!justify-end">
-            <x-input placeholder="Search..." wire:model.live.debounce="search" clearable icon="o-magnifying-glass" />
-        </x-slot:middle>
         <x-slot:actions>
             <x-button label="Filters" @click="$wire.drawer = true" responsive icon="o-funnel" class="btn-primary" />
         </x-slot:actions>
     </x-header>
 
+    <div class="flex items-center justify-between m-4">
+        <x-input placeholder="Search..." wire:model.live.debounce="search" clearable icon="o-magnifying-glass" />
+        <x-button label="Create Matrix" @click="$dispatch('matrix::create')" icon="o-plus" class="btn-primary" />
+    </div>
 
     <!-- TABLE  -->
     <x-card>
@@ -42,4 +43,5 @@
     </x-drawer>
 
     <livewire:admin.matrices.show />
+    <livewire:admin.matrices.create />
 </div>

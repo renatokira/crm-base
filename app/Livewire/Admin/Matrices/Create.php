@@ -4,7 +4,7 @@ namespace App\Livewire\Admin\Matrices;
 
 use App\Enum\CanEnum;
 use App\Models\Matrix;
-use Livewire\Attributes\Rule;
+use Livewire\Attributes\{Computed, On, Rule};
 use Livewire\Component;
 
 class Create extends Component
@@ -22,8 +22,10 @@ class Create extends Component
     #[Rule('in:MB,GB,TB')]
     public string $bandwidth_unit = '';
 
-    #[Rule(['required', 'string', 'max:255'])]
+    #[Rule(['required', 'string', 'min:3', 'max:255'])]
     public string $description = '';
+
+    public bool $matrixDrawer = false;
 
     public function mount()
     {
@@ -34,6 +36,28 @@ class Create extends Component
     public function render()
     {
         return view('livewire.admin.matrices.create');
+    }
+    #[On('matrix::create')]
+    public function open(): void
+    {
+        $this->resetErrorBag();
+        $this->matrixDrawer = true;
+    }
+
+    public function clear(): void
+    {
+        $this->resetErrorBag();
+
+        $this->reset(array_keys($this->except('matrixDrawer')));
+    }
+    #[Computed]
+    public function units(): array
+    {
+        return [
+            ['id' => 'MB', 'name' => 'MB'],
+            ['id' => 'GB', 'name' => 'GB'],
+            ['id' => 'TB', 'name' => 'TB'],
+        ];
     }
 
     public function save()
@@ -49,7 +73,7 @@ class Create extends Component
             'description'    => $this->description,
         ]);
 
-        $this->reset('name');
-        $this->redirect(route('admin.matrices.index'));
+        $this->matrixDrawer = false;
+        $this->reset();
     }
 }

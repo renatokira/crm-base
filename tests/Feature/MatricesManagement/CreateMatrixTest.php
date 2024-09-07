@@ -21,8 +21,7 @@ it('should be able admin create a new matrix', function () {
         ->set('bandwidth_unit', 'GB')
         ->set('description', 'Some description')
         ->call('save')
-        ->assertHasNoErrors()
-        ->assertRedirect(route('admin.matrices.index'));
+        ->assertHasNoErrors();
 
     assertDatabaseHas('matrices', [
         'name'           => 'FLA-JZN',
@@ -88,6 +87,7 @@ describe('validations', function () {
             ->assertHasErrors(['description' => $rule]);
     })->with([
         'required' => ['required', ''],
+        'min'      => ['min', 'hi'],
         'max'      => ['max', str_repeat('a', 256)],
     ]);
 });
