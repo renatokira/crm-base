@@ -11,9 +11,9 @@ return new class () extends Migration {
         Schema::create('matrices', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->integer('threshold')->nullable();
-            $table->integer('bandwidth')->nullable();
-            $table->string('bandwidth_unit')->nullable();
+            $table->integer('threshold');
+            $table->integer('bandwidth');
+            $table->string('bandwidth_unit');
             $table->string('description')->nullable();
             $table->timestamps();
         });
