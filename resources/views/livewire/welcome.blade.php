@@ -13,7 +13,7 @@
 
     <div class="grid grid-cols-1 gap-5 mt-5 lg:grid-cols-2 xl:grid-cols-3">
 
-        @forelse ($this->matrices as $matrix)
+        @forelse ($this->items as $matrix)
             <x-card shadow class="flex justify-evenly">
                 <x-slot:title>
                     <p class="text-lg">{{ $matrix->name }}</p>
@@ -45,7 +45,7 @@
     </div>
 
     <div class="mt-7">
-        {{ $this->matrices->links() }}
+        {{ $this->items->links() }}
     </div>
 
 

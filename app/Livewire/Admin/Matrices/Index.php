@@ -64,7 +64,7 @@ class Index extends Component
     }
 
     #[Computed]
-    public function matrices(): \Illuminate\Pagination\Paginator
+    public function items(): \Illuminate\Pagination\Paginator
     {
         return Matrix::query()
             ->search($this->search, ['name', 'bandwidth'])

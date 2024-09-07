@@ -22,8 +22,8 @@ it('should be able list all matrices in the page welcome paginated', function ()
     Matrix::factory()->count(15)->create();
 
     Livewire::test(Welcome::class)
-        ->assertSet('matrices', function ($matrices) {
-            expect($matrices)
+        ->assertSet('items', function ($items) {
+            expect($items)
                 ->toBeInstanceOf(\Illuminate\Pagination\Paginator::class)
                 ->toHaveCount(12);
 
@@ -48,16 +48,16 @@ it('should be able filter matrices by name', function () {
 
     Livewire::test(Welcome::class)
         ->set('search', 'FLA-JZP')
-        ->assertSet('matrices', function ($matrices) {
-            expect($matrices)
+        ->assertSet('items', function ($items) {
+            expect($items)
                 ->toHaveCount(1)
                 ->first()->name->toBe('FLA-JZP');
 
             return true;
         })
         ->set('search', 700)
-        ->assertSet('matrices', function ($matrices) {
-            expect($matrices)
+        ->assertSet('items', function ($items) {
+            expect($items)
                 ->toHaveCount(1)
                 ->first()->bandwidth->toBe(700);
 

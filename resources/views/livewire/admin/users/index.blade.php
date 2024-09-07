@@ -21,7 +21,7 @@
 
     </div>
 
-    <x-table :headers="$this->headers" :rows="$this->users" :sort-by="$sortBy">
+    <x-table :headers="$this->headers" :rows="$this->items" :sort-by="$sortBy">
 
         @scope('cell_permissions_name', $user)
             @if ($user->permissions->count())
@@ -55,7 +55,7 @@
     </x-table>
 
     <div class="mt-7">
-        {{ $this->users->links(data: ['scrollTo' => false]) }}
+        {{ $this->items->links(data: ['scrollTo' => false]) }}
     </div>
 
     <livewire:admin.users.delete />

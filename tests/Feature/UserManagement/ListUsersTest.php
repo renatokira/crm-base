@@ -29,8 +29,8 @@ test('livewire component to list users in the page', function () {
 
     $livewire = Livewire::test(Admin\Users\Index::class);
 
-    $livewire->assertSet('users', function ($users) {
-        expect($users)
+    $livewire->assertSet('items', function ($items) {
+        expect($items)
             ->toBeInstanceOf(LengthAwarePaginator::class)
             ->toHaveCount(11);
 
@@ -62,22 +62,22 @@ it('should be able to filter by name or email', function () {
     actingAs($admin);
 
     Livewire::test(Admin\Users\Index::class)
-        ->assertSet('users', function ($users) {
-            expect($users)
+        ->assertSet('items', function ($items) {
+            expect($items)
                 ->toHaveCount(2);
 
             return true;
         })->set('search', 'kira')
-        ->assertSet('users', function ($users) {
-            expect($users)
+        ->assertSet('items', function ($items) {
+            expect($items)
                 ->toHaveCount(1)
                 ->first()->name->toBe('Kira');
 
             return true;
         })
         ->set('search', 'rntok')
-        ->assertSet('users', function ($users) {
-            expect($users)
+        ->assertSet('items', function ($items) {
+            expect($items)
                 ->toHaveCount(1)
                 ->first()->name->toBe('Kira');
 
@@ -96,14 +96,14 @@ it('should be able to filter by permission key', function () {
     actingAs($admin);
 
     Livewire::test(Admin\Users\Index::class)
-        ->assertSet('users', function ($users) {
-            expect($users)
+        ->assertSet('items', function ($items) {
+            expect($items)
                 ->toHaveCount(2);
 
             return true;
         })->set('search_permissions', [$permissionAnAdmin->id, $permissionAnUser->id])
-        ->assertSet('users', function ($users) {
-            expect($users)
+        ->assertSet('items', function ($items) {
+            expect($items)
                 ->toHaveCount(2)
                 ->first()->name->toBe('Joe Doe');
 
@@ -118,15 +118,15 @@ it('should be list deleted users', function () {
     actingAs($admin);
 
     Livewire::test(Admin\Users\Index::class)
-        ->assertSet('users', function ($users) {
-            expect($users)
+        ->assertSet('items', function ($items) {
+            expect($items)
                 ->toHaveCount(1);
 
             return true;
         })
         ->set('search_trashed', true)
-        ->assertSet('users', function ($users) {
-            expect($users)
+        ->assertSet('items', function ($items) {
+            expect($items)
                 ->toHaveCount(2);
 
             return true;
@@ -142,10 +142,10 @@ it('should be able to sort by name', function () {
 
     Livewire::test(Admin\Users\Index::class)
         ->set('sortBy', ['column' => 'name', 'direction' => 'desc'])
-        ->assertSet('users', function ($users) {
-            expect($users)
+        ->assertSet('items', function ($items) {
+            expect($items)
                 ->first()->name->toBe('No Admin')
-                ->and($users)
+                ->and($items)
                 ->last()->name->toBe('Joe Doe');
 
             return true;
@@ -153,10 +153,10 @@ it('should be able to sort by name', function () {
 
     Livewire::test(Admin\Users\Index::class)
         ->set('sortBy', ['column' => 'name', 'direction' => 'asc'])
-        ->assertSet('users', function ($users) {
-            expect($users)
+        ->assertSet('items', function ($items) {
+            expect($items)
                 ->first()->name->toBe('Joe Doe')
-                ->and($users)
+                ->and($items)
                 ->last()->name->toBe('No Admin');
 
             return true;
@@ -171,13 +171,13 @@ it('should be able paginate the result', function () {
     actingAs($admin);
 
     Livewire::test(Admin\Users\Index::class)
-        ->assertSet('users', function (LengthAwarePaginator $users) {
-            expect($users)->toHaveCount(15);
+        ->assertSet('items', function (LengthAwarePaginator $items) {
+            expect($items)->toHaveCount(15);
 
             return true;
         })->set('perPage', 20)
-        ->assertSet('users', function (LengthAwarePaginator $users) {
-            expect($users)->toHaveCount(20);
+        ->assertSet('items', function (LengthAwarePaginator $items) {
+            expect($items)->toHaveCount(20);
 
             return true;
         });

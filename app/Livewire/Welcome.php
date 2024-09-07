@@ -19,7 +19,7 @@ class Welcome extends Component
     }
 
     #[Computed]
-    public function matrices()
+    public function items()
     {
         return \App\Models\Matrix::query()
             ->search($this->search, ['name', 'bandwidth'])

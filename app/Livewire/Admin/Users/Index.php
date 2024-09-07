@@ -43,7 +43,7 @@ class Index extends Component
         }
     }
     #[Computed]
-    public function users(): LengthAwarePaginator
+    public function items(): LengthAwarePaginator
     {
         return User::query()
             ->with('permissions')

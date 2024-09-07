@@ -23,8 +23,8 @@ it('livewire component to list  paginated matrices in the page', function () {
 
     $livewire = Livewire::test(Matrices\Index::class);
 
-    $livewire->assertSet('matrices', function ($matrices) {
-        expect($matrices)
+    $livewire->assertSet('items', function ($items) {
+        expect($items)
             ->toBeInstanceOf(\Illuminate\Pagination\Paginator::class)
             ->toHaveCount(15);
 
@@ -62,23 +62,23 @@ it('should be able to filter by name and bandwidth', function () {
     actingAs($user);
 
     Livewire::test(Matrices\Index::class)
-        ->assertSet('matrices', function ($matrices) {
-            expect($matrices)
+        ->assertSet('items', function ($items) {
+            expect($items)
                 ->toHaveCount(2);
 
             return true;
         })
         ->set('search', 'fla')
-        ->assertSet('matrices', function ($matrices) {
-            expect($matrices)
+        ->assertSet('items', function ($items) {
+            expect($items)
                 ->toHaveCount(1)
                 ->first()->name->toBe('FLA-JZN');
 
             return true;
         })
         ->set('search', 700)
-        ->assertSet('matrices', function ($matrices) {
-            expect($matrices)
+        ->assertSet('items', function ($items) {
+            expect($items)
                 ->toHaveCount(1)
                 ->first()->name->toBe('RNT-KIRA');
 
