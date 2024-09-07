@@ -30,7 +30,7 @@ class Welcome extends Component
             ->when($this->bandwidth, function ($query) {
                 $query->where('bandwidth', 'like', "%$this->bandwidth%");
             })
-            ->simplePaginate(10);
+            ->simplePaginate(12);
     }
 
     public function render()

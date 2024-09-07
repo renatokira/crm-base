@@ -25,7 +25,7 @@ it('should be able list all matrices in the page welcome paginated', function ()
         ->assertSet('matrices', function ($matrices) {
             expect($matrices)
                 ->toBeInstanceOf(\Illuminate\Pagination\Paginator::class)
-                ->toHaveCount(10);
+                ->toHaveCount(12);
 
             return true;
         });

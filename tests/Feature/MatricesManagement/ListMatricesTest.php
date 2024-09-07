@@ -50,11 +50,11 @@ it('should be able to filter by name', function () {
     $user = User::factory()->admin()->create();
 
     Matrix::factory()->create([
-        'name' => 'MATRIZ-FLA-JZN',
+        'name' => 'FLA-JZN',
     ]);
 
     Matrix::factory()->create([
-        'name' => 'MATRIZ-KIRA',
+        'name' => 'RNT-KIRA',
     ]);
 
     actingAs($user);
@@ -66,11 +66,11 @@ it('should be able to filter by name', function () {
 
             return true;
         })
-        ->set('search', 'Fla')
+        ->set('search', 'fla')
         ->assertSet('matrices', function ($matrices) {
             expect($matrices)
                 ->toHaveCount(1)
-                ->first()->name->toBe('MATRIZ-FLA-JZN');
+                ->first()->name->toBe('FLA-JZN');
 
             return true;
         })
@@ -78,7 +78,7 @@ it('should be able to filter by name', function () {
         ->assertSet('matrices', function ($matrices) {
             expect($matrices)
                 ->toHaveCount(1)
-                ->first()->name->toBe('MATRIZ-KIRA');
+                ->first()->name->toBe('RNT-KIRA');
 
             return true;
         });

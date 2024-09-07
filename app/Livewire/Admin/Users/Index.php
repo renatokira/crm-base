@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Users;
 
 use App\Enum\CanEnum;
 use App\Models\{Permission, User};
+use App\Traits\Livewire\HasTable;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -15,18 +16,13 @@ use Livewire\{Component, WithPagination};
 class Index extends Component
 {
     use WithPagination;
-
-    public ?string $search = null;
+    use HasTable;
 
     public bool $search_trashed = false;
 
     public array $search_permissions = [];
 
     public Collection $permissionsToSearch;
-
-    public array $sortBy = ['column' => 'name', 'direction' => 'asc'];
-
-    public int $perPage = 15;
 
     public function mount()
     {

@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Matrices;
 
 use App\Enum\CanEnum;
 use App\Models\Matrix;
+use App\Traits\Livewire\HasTable;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\{Computed};
 use Livewire\{Component, WithPagination, WithoutUrlPagination};
@@ -14,14 +15,9 @@ class Index extends Component
     use Toast;
     use WithPagination;
     use WithoutUrlPagination;
-
-    public ?string $search = null;
+    use HasTable;
 
     public bool $drawer = false;
-
-    public array $sortBy = ['column' => 'name', 'direction' => 'asc'];
-
-    public int $perPage = 15;
 
     public function mount()
     {
