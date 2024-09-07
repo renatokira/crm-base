@@ -16,29 +16,14 @@
 
 
         <x-checkbox label="Show deleted users" wire:model.live="search_trashed" right tight />
-
         <x-select label="Records per page" :options="$this->listPerPages" wire:model.live="perPage" />
-
 
 
     </div>
 
-    <x-table :headers="$this->headers" :rows="$this->users">
+    <x-table :headers="$this->headers" :rows="$this->items" :sort-by="$sortBy">
 
-        @scope('header_id', $header)
-            <x-table.th-label name="id" :$header class="select-none" />
-        @endscope
-
-        @scope('header_name', $header)
-            <x-table.th-label name="name" :$header class="select-none" />
-        @endscope
-
-        @scope('header_email', $header)
-            <x-table.th-label name="email" :$header class="select-none" />
-        @endscope
-
-
-        @scope('cell_permissions', $user)
+        @scope('cell_permissions_name', $user)
             @if ($user->permissions->count())
                 @foreach ($user->permissions as $permission)
                     <x-badge :value="$permission->key" class="badge-sm badge-primary" />
@@ -70,7 +55,7 @@
     </x-table>
 
     <div class="mt-7">
-        {{ $this->users->links(data: ['scrollTo' => false]) }}
+        {{ $this->items->links(data: ['scrollTo' => false]) }}
     </div>
 
     <livewire:admin.users.delete />

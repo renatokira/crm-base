@@ -23,8 +23,8 @@ it('livewire component to list  paginated matrices in the page', function () {
 
     $livewire = Livewire::test(Matrices\Index::class);
 
-    $livewire->assertSet('matrices', function ($matrices) {
-        expect($matrices)
+    $livewire->assertSet('items', function ($items) {
+        expect($items)
             ->toBeInstanceOf(\Illuminate\Pagination\Paginator::class)
             ->toHaveCount(15);
 
@@ -45,40 +45,42 @@ test('checking a matices table format', function () {
         ]);
 });
 
-it('should be able to filter by name', function () {
+it('should be able to filter by name and bandwidth', function () {
     /** @var User $user */
     $user = User::factory()->admin()->create();
 
     Matrix::factory()->create([
-        'name' => 'MATRIZ-FLA-JZN',
+        'name'      => 'FLA-JZN',
+        'bandwidth' => 100,
     ]);
 
     Matrix::factory()->create([
-        'name' => 'MATRIZ-KIRA',
+        'name'      => 'RNT-KIRA',
+        'bandwidth' => 700,
     ]);
 
     actingAs($user);
 
     Livewire::test(Matrices\Index::class)
-        ->assertSet('matrices', function ($matrices) {
-            expect($matrices)
+        ->assertSet('items', function ($items) {
+            expect($items)
                 ->toHaveCount(2);
 
             return true;
         })
-        ->set('search', 'Fla')
-        ->assertSet('matrices', function ($matrices) {
-            expect($matrices)
+        ->set('search', 'fla')
+        ->assertSet('items', function ($items) {
+            expect($items)
                 ->toHaveCount(1)
-                ->first()->name->toBe('MATRIZ-FLA-JZN');
+                ->first()->name->toBe('FLA-JZN');
 
             return true;
         })
-        ->set('search', 'kira')
-        ->assertSet('matrices', function ($matrices) {
-            expect($matrices)
+        ->set('search', 700)
+        ->assertSet('items', function ($items) {
+            expect($items)
                 ->toHaveCount(1)
-                ->first()->name->toBe('MATRIZ-KIRA');
+                ->first()->name->toBe('RNT-KIRA');
 
             return true;
         });

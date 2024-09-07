@@ -12,7 +12,7 @@
 
     <!-- TABLE  -->
     <x-card>
-        <x-table :headers="$this->headers" :rows="$this->matrices" :sort-by="$sortBy">
+        <x-table :headers="$this->headers" :rows="$this->items" :sort-by="$sortBy">
 
             @scope('cell_bandwidth', $user)
                 {{ $user['bandwidth'] . '' . $user['bandwidth_unit'] }}
@@ -26,7 +26,7 @@
         </x-table>
 
         <div class="mt-7">
-            {{ $this->matrices->links(data: ['scrollTo' => false]) }}
+            {{ $this->items->links(data: ['scrollTo' => false]) }}
         </div>
     </x-card>
 

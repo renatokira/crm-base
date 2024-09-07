@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\Models;
+namespace App\Traits\Models\User;
 
 use App\Enum\CanEnum;
 use App\Models\Permission;

@@ -1,12 +1,19 @@
 <div>
     <!-- HEADER -->
-    <x-header title="Welcome" size="text-3xl" separator
-        progress-indicator>
+    <x-header title="Welcome" size="text-3xl" separator progress-indicator>
     </x-header>
 
+    <div class="flex mb-5 space-x-4 place-items-center">
+
+        <div class="w-1/3">
+            <x-input placeholder="Search by name and bandwidth" icon="o-magnifying-glass" wire:model.live.debounce.300ms="search" />
+        </div>
+
+    </div>
 
     <div class="grid grid-cols-1 gap-5 mt-5 lg:grid-cols-2 xl:grid-cols-3">
-        @foreach ($matrices as $matrix)
+
+        @forelse ($this->items as $matrix)
             <x-card shadow class="flex justify-evenly">
                 <x-slot:title>
                     <p class="text-lg">{{ $matrix->name }}</p>
@@ -31,11 +38,14 @@
                     <x-button label="More" icon="o-link" class="btn-outline btn-sm" link="#" />
                 </x-slot:actions>
             </x-card>
-        @endforeach
+        @empty
+            <p class="text-lg">No matrix found</p>
+        @endforelse
+
     </div>
 
     <div class="mt-7">
-        {{ $matrices->links() }}
+        {{ $this->items->links() }}
     </div>
 
 
