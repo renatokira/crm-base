@@ -110,3 +110,14 @@ it('should be able to show all details of a matrix in the component', function (
         ->assertSee($matrix->bandwidth . '' . $matrix->bandwidth_unit)
         ->assertSee($matrix->created_at->format('d/m/Y H:i'));
 });
+
+test('check if components are in the page', function () {
+
+    $matrix = Matrix::factory()->create();
+    $user   = User::factory()->admin()->create();
+    actingAs($user);
+
+    Livewire::test(Matrices\Index::class)
+        ->assertContainsLivewireComponent('admin.matrices.show')
+        ->assertContainsLivewireComponent('admin.matrices.create');
+});
