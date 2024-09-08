@@ -49,7 +49,7 @@ class Index extends Component
     {
         return [
             ['key' => 'id', 'label' => '#', 'class' => 'w-1'],
-            ['key' => 'name', 'label' => 'Matriz', 'class' => 'w-64'],
+            ['key' => 'name', 'label' => 'Matrix', 'class' => 'w-64'],
             ['key' => 'threshold', 'label' => 'Threshold', 'class' => 'w-20'],
             ['key' => 'bandwidth', 'label' => 'Bandwidth', 'class' => 'w-20'],
         ];
