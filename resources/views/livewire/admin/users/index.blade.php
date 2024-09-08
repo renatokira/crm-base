@@ -15,8 +15,8 @@
         </div>
 
 
-        <x-checkbox label="Show deleted users" wire:model.live="search_trashed" right tight />
         <x-select label="Records per page" :options="$this->listPerPages" wire:model.live="perPage" />
+        <x-checkbox label="Show deleted users" wire:model.live="search_trashed" right tight />
 
 
     </div>
