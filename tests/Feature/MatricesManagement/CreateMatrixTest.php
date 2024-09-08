@@ -32,6 +32,26 @@ it('should be able admin create a new matrix', function () {
     ]);
 });
 
+it('make sure that method saved is wired in form', function () {
+
+    /** @var User $user */
+    $user = User::factory()->admin()->create();
+    actingAs($user);
+
+    Livewire::test(Matrices\Create::class)
+        ->assertMethodWiredToForm('save');
+});
+
+it('should be able to wired modal property', function () {
+
+    /** @var User $user */
+    $user = User::factory()->admin()->create();
+    actingAs($user);
+
+    Livewire::test(Matrices\Create::class)
+        ->assertPropertyEntangled('matrixDrawer');
+});
+
 describe('validations', function () {
     test('name', function ($rule, $value) {
 
