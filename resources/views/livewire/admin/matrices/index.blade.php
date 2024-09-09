@@ -44,4 +44,5 @@
 
     <livewire:admin.matrices.show />
     <livewire:admin.matrices.create />
+    <livewire:admin.matrices.update />
 </div>

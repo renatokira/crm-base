@@ -13,7 +13,7 @@ it('should be able to show all details of a user in the component', function () 
 
     actingAs($admin);
     Livewire::test(Admin\Users\Show::class)
-        ->call('loadUser', $user->id)
+        ->call('load', $user->id)
         ->assertSet('user.id', $user->id)
         ->assertSet('drawer', true)
         ->assertSee($user->email)
@@ -36,7 +36,7 @@ it('should be able to restore a user and display information', function () {
         ->call('restore');
 
     Livewire::test(Admin\Users\Show::class)
-        ->call('loadUser', $forRestoration->id)
+        ->call('load', $forRestoration->id)
         ->assertSet('user.id', $forRestoration->id)
         ->assertSet('drawer', true)
         ->assertSee($forRestoration->email)
@@ -55,11 +55,11 @@ it('should open the drawer when event is dispatched', function () {
         ->assertDispatched('user::show', id: $user->id);
 });
 
-it('making sure that the method loadUser has the On', function () {
+it('making sure that the method load has the On', function () {
 
     $livewireClass = Admin\Users\Show::class;
     $reflection    = new ReflectionClass($livewireClass);
-    $method        = $reflection->getMethod('loadUser');
+    $method        = $reflection->getMethod('load');
 
     $attributesLoadUser = $method->getAttributes();
 

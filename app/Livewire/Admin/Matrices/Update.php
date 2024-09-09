@@ -3,10 +3,11 @@
 namespace App\Livewire\Admin\Matrices;
 
 use App\Enum\CanEnum;
+use App\Models\Matrix;
 use Livewire\Attributes\{On};
 use Livewire\Component;
 
-class Create extends Component
+class Update extends Component
 {
     public Form $form;
 
@@ -19,7 +20,7 @@ class Create extends Component
 
     public function render()
     {
-        return view('livewire.admin.matrices.create', [
+        return view('livewire.admin.matrices.update', [
             'units' => [
                 ['id' => 'MB', 'name' => 'MB'],
                 ['id' => 'GB', 'name' => 'GB'],
@@ -30,23 +31,19 @@ class Create extends Component
 
     public function save()
     {
-        $this->form->create();
+        $this->form->update();
 
-        $this->matrixDrawer = false;
         $this->dispatch('matrices::reload')->to('admin.matrices.index');
+        $this->matrixDrawer = false;
     }
 
-    #[On('matrix::create')]
-    public function open(): void
+    #[On('matrix::update')]
+    public function load(int $id)
     {
+        $matrix = Matrix::find($id);
+        $this->form->setMatrix($matrix);
+
         $this->form->resetErrorBag();
         $this->matrixDrawer = true;
-    }
-
-    public function clear(): void
-    {
-        $this->resetErrorBag();
-
-        $this->reset(array_keys($this->except('matrixDrawer')));
     }
 }

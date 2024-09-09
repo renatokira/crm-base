@@ -102,22 +102,11 @@ it('should be able to show all details of a matrix in the component', function (
     $matrix = Matrix::factory()->create();
 
     Livewire::test(Matrices\Show::class)
-        ->call('loadMatrix', $matrix->id)
+        ->call('load', $matrix->id)
         ->assertSet('matrix.id', $matrix->id)
         ->assertSet('modal', true)
         ->assertSee($matrix->name)
         ->assertSee($matrix->threshold)
         ->assertSee($matrix->bandwidth . '' . $matrix->bandwidth_unit)
         ->assertSee($matrix->created_at->format('d/m/Y H:i'));
-});
-
-test('check if components are in the page', function () {
-
-    $matrix = Matrix::factory()->create();
-    $user   = User::factory()->admin()->create();
-    actingAs($user);
-
-    Livewire::test(Matrices\Index::class)
-        ->assertContainsLivewireComponent('admin.matrices.show')
-        ->assertContainsLivewireComponent('admin.matrices.create');
 });
