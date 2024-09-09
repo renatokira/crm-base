@@ -10,7 +10,7 @@ class Create extends Component
 {
     public Form $form;
 
-    public bool $matrixDrawer = false;
+    public bool $matrixCreateDrawer = false;
 
     public function mount()
     {
@@ -32,7 +32,7 @@ class Create extends Component
     {
         $this->form->create();
 
-        $this->matrixDrawer = false;
+        $this->matrixCreateDrawer = false;
         $this->dispatch('matrices::reload')->to('admin.matrices.index');
     }
 
@@ -40,13 +40,7 @@ class Create extends Component
     public function open(): void
     {
         $this->form->resetErrorBag();
-        $this->matrixDrawer = true;
+        $this->matrixCreateDrawer = true;
     }
 
-    public function clear(): void
-    {
-        $this->resetErrorBag();
-
-        $this->reset(array_keys($this->except('matrixDrawer')));
-    }
 }

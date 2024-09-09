@@ -11,7 +11,7 @@ class Update extends Component
 {
     public Form $form;
 
-    public bool $matrixDrawer = false;
+    public bool $matrixUpdateDrawer = false;
 
     public function mount()
     {
@@ -34,7 +34,7 @@ class Update extends Component
         $this->form->update();
 
         $this->dispatch('matrices::reload')->to('admin.matrices.index');
-        $this->matrixDrawer = false;
+        $this->matrixUpdateDrawer = false;
     }
 
     #[On('matrix::update')]
@@ -44,6 +44,6 @@ class Update extends Component
         $this->form->setMatrix($matrix);
 
         $this->form->resetErrorBag();
-        $this->matrixDrawer = true;
+        $this->matrixUpdateDrawer = true;
     }
 }

@@ -72,7 +72,7 @@ class Index extends Component
             ->simplePaginate();
     }
 
-    #[On('matrix::reload')]
+    #[On('matrices::reload')]
     public function render()
     {
         return view('livewire.admin.matrices.index');

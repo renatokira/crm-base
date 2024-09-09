@@ -46,14 +46,14 @@ it('make sure that method saved is wired in form', function () {
         ->assertMethodWiredToForm('save');
 });
 
-it('should be able to wired matrixDrawer property', function () {
+it('should be able to wired matrixUpdateDrawer property', function () {
 
     /** @var User $user */
     $user = User::factory()->admin()->create();
     actingAs($user);
 
     Livewire::test(Matrices\Update::class)
-        ->assertPropertyEntangled('matrixDrawer');
+        ->assertPropertyEntangled('matrixUpdateDrawer');
 });
 
 describe('validations', function () {

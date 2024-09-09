@@ -54,7 +54,7 @@ it('should be able to wired modal property', function () {
     actingAs($user);
 
     Livewire::test(Matrices\Create::class)
-        ->assertPropertyEntangled('matrixDrawer');
+        ->assertPropertyEntangled('matrixCreateDrawer');
 });
 
 describe('validations', function () {
