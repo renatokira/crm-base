@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Matrices;
 
 use App\Models\Matrix;
+use App\Rules\TrimmedRule;
 use Illuminate\Validation\Rule;
 use Livewire\Form as BaseForm;
 
@@ -23,7 +24,7 @@ class Form extends BaseForm
     public function rules(): array
     {
         return [
-            'name'           => ['required', 'string', 'min:3', 'max:255',  Rule::unique('matrices')->ignore($this->matrix?->id)],
+            'name'           => ['required', 'string', 'min:3', 'max:255', new TrimmedRule(), Rule::unique('matrices')->ignore($this->matrix?->id)],
             'threshold'      => ['required', 'numeric', 'min:1'],
             'bandwidth'      => ['required', 'numeric', 'min:1'],
             'bandwidth_unit' => ['required', 'string', 'in:MB,GB,TB'],
