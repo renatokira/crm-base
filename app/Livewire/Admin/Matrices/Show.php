@@ -18,7 +18,7 @@ class Show extends Component
     }
 
     #[On('matrix::show')]
-    public function loadMatrix(int $id): void
+    public function load(int $id): void
     {
         $this->matrix = Matrix::find($id);
         $this->modal  = true;

@@ -1,6 +1,6 @@
-<x-drawer wire:model="matrixCreateDrawer" title="Create Matrix" class="w-11/12 p-4 lg:w-1/3" separator right>
+<x-drawer wire:model="matrixUpdateDrawer" title="Update Matrix" class="w-11/12 p-4 lg:w-1/3" separator right>
 
-    <x-form wire:submit.prevent="save" id="create-matrix-form">
+    <x-form wire:submit.prevent="save" id="update-matrix-form">
         <div class="space-y-4">
 
             <x-input label="Name" wire:model="form.name" />
@@ -13,8 +13,8 @@
 
         </div>
         <x-slot:actions>
-            <x-button label="Close" @click="$wire.matrixCreateDrawer = false" />
-            <x-button type="submit" form="create-matrix-form" label="Create" icon="o-plus" class="btn-primary" />
+            <x-button label="Close" @click="$wire.matrixUpdateDrawer = false" />
+            <x-button type="submit" form="update-matrix-form" label="Update" icon="o-plus" class="btn-primary" />
         </x-slot:actions>
     </x-form>
 </x-drawer>

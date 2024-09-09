@@ -10,25 +10,24 @@ beforeEach(function () {
     /** @var User $user */
     $user = User::factory()->admin()->create();
     actingAs($user);
+
+    $this->matrix = Matrix::factory()->create();
 });
 
-it('should be able admin create a new matrix', function () {
+it('should be able admin update matrix', function () {
 
-    Livewire::test(Matrices\Create::class)
+    Livewire::test(Matrices\Update::class)
+        ->call('load', $this->matrix->id)
         ->set('form.name', 'FLA-JZN')
-        ->assertPropertyWired('form.name')
         ->set('form.threshold', 100)
-        ->assertPropertyWired('form.threshold')
         ->set('form.bandwidth', 300)
-        ->assertPropertyWired('form.bandwidth')
         ->set('form.bandwidth_unit', 'GB')
-        ->assertPropertyWired('form.bandwidth_unit')
         ->set('form.description', 'Some description')
-        ->assertPropertyWired('form.description')
         ->call('save')
         ->assertHasNoErrors();
 
     assertDatabaseHas('matrices', [
+        'id'             => $this->matrix->id,
         'name'           => 'FLA-JZN',
         'threshold'      => 100,
         'bandwidth'      => 300,
@@ -43,26 +42,27 @@ it('make sure that method saved is wired in form', function () {
     $user = User::factory()->admin()->create();
     actingAs($user);
 
-    Livewire::test(Matrices\Create::class)
+    Livewire::test(Matrices\Update::class)
         ->assertMethodWiredToForm('save');
 });
 
-it('should be able to wired modal property', function () {
+it('should be able to wired matrixUpdateDrawer property', function () {
 
     /** @var User $user */
     $user = User::factory()->admin()->create();
     actingAs($user);
 
-    Livewire::test(Matrices\Create::class)
-        ->assertPropertyEntangled('matrixCreateDrawer');
+    Livewire::test(Matrices\Update::class)
+        ->assertPropertyEntangled('matrixUpdateDrawer');
 });
 
 describe('validations', function () {
-    test('name', function ($rule, $value) {
+    test('form.name', function ($rule, $value) {
 
         Matrix::factory()->create(['name' => 'FLA-JZN']);
 
-        Livewire::test(Matrices\Create::class)
+        Livewire::test(Matrices\Update::class)
+            ->call('load', $this->matrix->id)
             ->set('form.name', $value)
             ->call('save')
             ->assertHasErrors(['form.name' => $rule]);
@@ -74,7 +74,8 @@ describe('validations', function () {
     ]);
 
     test('threshold', function ($rule, $value) {
-        Livewire::test(Matrices\Create::class)
+        Livewire::test(Matrices\Update::class)
+            ->call('load', $this->matrix->id)
             ->set('form.threshold', $value)
             ->call('save')
             ->assertHasErrors(['form.threshold' => $rule]);
@@ -84,7 +85,8 @@ describe('validations', function () {
     ]);
 
     test('bandwidth', function ($rule, $value) {
-        Livewire::test(Matrices\Create::class)
+        Livewire::test(Matrices\Update::class)
+            ->call('load', $this->matrix->id)
             ->set('form.bandwidth', $value)
             ->call('save')
             ->assertHasErrors(['form.bandwidth' => $rule]);
@@ -94,7 +96,8 @@ describe('validations', function () {
     ]);
 
     test('bandwidth_unit', function ($rule, $value) {
-        Livewire::test(Matrices\Create::class)
+        Livewire::test(Matrices\Update::class)
+            ->call('load', $this->matrix->id)
             ->set('form.bandwidth_unit', $value)
             ->call('save')
             ->assertHasErrors(['form.bandwidth_unit' => $rule]);
@@ -104,7 +107,8 @@ describe('validations', function () {
     ]);
 
     test('description', function ($rule, $value) {
-        Livewire::test(Matrices\Create::class)
+        Livewire::test(Matrices\Update::class)
+            ->call('load', $this->matrix->id)
             ->set('form.description', $value)
             ->call('save')
             ->assertHasErrors(['form.description' => $rule]);
@@ -121,5 +125,5 @@ test('check if components are in the page', function () {
     actingAs($user);
 
     Livewire::test(Matrices\Index::class)
-        ->assertContainsLivewireComponent('admin.matrices.create');
+        ->assertContainsLivewireComponent('admin.matrices.update');
 });

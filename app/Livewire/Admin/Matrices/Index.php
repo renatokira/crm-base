@@ -5,7 +5,7 @@ namespace App\Livewire\Admin\Matrices;
 use App\Enum\CanEnum;
 use App\Models\Matrix;
 use App\Traits\Livewire\HasTable;
-use Livewire\Attributes\{Computed};
+use Livewire\Attributes\{Computed, On};
 use Livewire\{Component, WithPagination, WithoutUrlPagination};
 use Mary\Traits\Toast;
 
@@ -72,9 +72,9 @@ class Index extends Component
             ->simplePaginate();
     }
 
+    #[On('matrices::reload')]
     public function render()
     {
-
         return view('livewire.admin.matrices.index');
     }
 }

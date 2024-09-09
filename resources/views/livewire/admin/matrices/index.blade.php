@@ -15,14 +15,16 @@
     <x-card>
         <x-table :headers="$this->headers" :rows="$this->items" :sort-by="$sortBy">
 
-            @scope('cell_bandwidth', $user)
-                {{ $user['bandwidth'] . '' . $user['bandwidth_unit'] }}
+            @scope('cell_bandwidth', $mtx)
+                {{ $mtx['bandwidth'] . '' . $mtx['bandwidth_unit'] }}
             @endscope
 
-            @scope('actions', $user)
-                <x-button icon="o-eye" wire:key="show-btn-{{ $user->id }}" id="show-btn-{{ $user->id }}"
-                    wire:click="showMatrix('{{ $user->id }}')" spinner class="btn-ghost btn-sm" />
-                <x-button icon="o-trash" wire:click="delete({{ $user['id'] }})" spinner class="btn-ghost btn-sm" />
+            @scope('actions', $mtx)
+                <x-button id="update-btn-{{ $mtx->id }}" wire:key="update-btn-{{ $mtx->id }}" icon="o-pencil"
+                    @click="$dispatch('matrix::update', { id: {{ $mtx->id }}})" spinner class="btn-sm" />
+                <x-button icon="o-eye" wire:key="show-btn-{{ $mtx->id }}" id="show-btn-{{ $mtx->id }}"
+                    wire:click="showMatrix('{{ $mtx->id }}')" spinner class="btn-ghost btn-sm" />
+                <x-button icon="o-trash" wire:click="delete({{ $mtx['id'] }})" spinner class="btn-ghost btn-sm" />
             @endscope
         </x-table>
 
@@ -44,4 +46,5 @@
 
     <livewire:admin.matrices.show />
     <livewire:admin.matrices.create />
+    <livewire:admin.matrices.update />
 </div>
